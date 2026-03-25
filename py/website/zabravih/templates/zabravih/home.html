@@ -1,0 +1,14 @@
+{% extends "zabravih/base.html" %}
+{% load static %}
+
+{% block title %}Zabravih{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center">
+  <h1 class="text-4xl font-bold text-gray-800">Base for Zabravih website</h1>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'zabravih/js/home.js' %}" defer></script>
+{% endblock %}
