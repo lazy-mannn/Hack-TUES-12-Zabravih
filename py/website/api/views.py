@@ -1,10 +1,10 @@
 from .serializers import *
 
-from django.http import HttpRespone
+from django.http import HttpResponse
 from django.db.models import Q
 from django.utils import timezone
 
-from rest_framework import api_view
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -58,7 +58,7 @@ def hive_detail(request, pk):
             key = bucket_start.isoformat()
 
             if key not in buckets:
-                bucke   ts[key] = {
+                buckets[key] = {
                     'start': bucket_start,
                     'count': 0,
                     'sum_temperature': 0.0,
