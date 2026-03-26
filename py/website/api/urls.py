@@ -1,9 +1,9 @@
 from django.urls import path
 
-from . import views
+from .views import hive_detail, hive_list, register_hive
 
 urlpatterns = [
-    path('', views.hive_list, name='hive-list'),
-    path('<int:pk>/', views.hive_detail, name='hive-detail'),
-    path('register/', views.register_hive, name='register-hive'),
+    path('', hive_list, name='hive-list'),
+    path('<int:pk>/', hive_detail, name='hive-detail'),
+    path('register/', register_hive, name='register-hive'),
 ]

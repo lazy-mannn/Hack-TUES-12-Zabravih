@@ -1,21 +1,24 @@
 from .serializers import *
+from .authentication import require_api_key
 
-from django.http import HttpRespone
+from django.http import HttpResponse
 from django.db.models import Q
 from django.utils import timezone
 
-from rest_framework import api_view
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 from datetime import timedelta
 
+@require_api_key
 @api_view(['GET'])
 def hive_list(request):
-    hives = Hive.objects.all()
+    hives = Hive.objects.exclude(name='server')
     serializer = HiveListSerializer(hives, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@require_api_key
 @api_view(['GET'])
 def hive_detail(request, pk):
     try:
@@ -97,8 +100,10 @@ def hive_detail(request, pk):
             'measurements': aggregated,
         }, status=status.HTTP_200_OK)
 
-    # If invalid displayed_time, return 400 or default
-    return Response({'error': 'Invalid displayed_time. Use 24h, 7d, or 14d.'}, status=status.HTTP_400_BAD_REQUEST)
+    serializer = HiveDetailSerializer(hive)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@require_api_key
 @api_view(['POST'])
 def register_hive(request):
     serializer = HiveRegisterSerializer(data=request.data)
