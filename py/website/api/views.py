@@ -1,4 +1,5 @@
 from .serializers import *
+from .authentication import require_api_key
 
 from django.http import HttpResponse
 from django.db.models import Q
@@ -10,12 +11,14 @@ from rest_framework import status
 
 from datetime import timedelta
 
+@require_api_key
 @api_view(['GET'])
 def hive_list(request):
-    hives = Hive.objects.all()
+    hives = Hive.objects.exclude(name='server')
     serializer = HiveListSerializer(hives, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@require_api_key
 @api_view(['GET'])
 def hive_detail(request, pk):
     try:
@@ -96,6 +99,7 @@ def hive_detail(request, pk):
     serializer = HiveDetailSerializer(hive)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@require_api_key
 @api_view(['POST'])
 def register_hive(request):
     serializer = HiveRegisterSerializer(data=request.data)
