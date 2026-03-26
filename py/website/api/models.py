@@ -13,7 +13,6 @@ class HiveMeasurement(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     temperature = models.FloatField(help_text="Temperature in Celsius")
     humidity = models.FloatField(help_text="Humidity percentage")
-    state = models.CharField(max_length=4, choices=HiveState.choices)
     co2_level = models.FloatField(help_text="CO2 levels in ppm")
     
     STATE_CHOICES = [
