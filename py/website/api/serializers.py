@@ -1,6 +1,16 @@
 from rest_framework import serializers
 from .models import Hive, HiveMeasurement
 
+class HiveRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hive
+        fields = [
+            'id',
+            'macaddress',
+            'name', 
+            'location'
+        ]
+
 class HiveListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hive
