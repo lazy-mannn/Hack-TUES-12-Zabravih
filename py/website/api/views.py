@@ -27,7 +27,7 @@ def hive_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     query = request.query_params
-    displayed_time_period_length = query.get('displayed_time', None)
+    displayed_time_period_length = query.get('displayed_time', '24h')  # Default to 24h
 
     if displayed_time_period_length in ('24h', '7d', '14d'):
 
@@ -67,6 +67,7 @@ def hive_detail(request, pk):
                     'sum_temperature': 0.0,
                     'sum_humidity': 0.0,
                     'sum_co2_level': 0.0,
+                    'state_counts': {},
                 }
 
             b = buckets[key]
@@ -74,26 +75,29 @@ def hive_detail(request, pk):
             b['sum_temperature'] += m.temperature
             b['sum_humidity'] += m.humidity
             b['sum_co2_level'] += m.co2_level
+            if m.state not in b['state_counts']:
+                b['state_counts'][m.state] = 0
+            b['state_counts'][m.state] += 1
 
         aggregated = []
         for key in sorted(buckets.keys()):
             b = buckets[key]
             if b['count'] == 0:
                 continue
+            most_common_state = max(b['state_counts'], key=b['state_counts'].get) if b['state_counts'] else None
             aggregated.append({
-                'bucket_start': b['start'],
-                'bucket_end': b['start'] + interval,
-                'avg_temperature': b['sum_temperature'] / b['count'],
-                'avg_humidity': b['sum_humidity'] / b['count'],
-                'avg_co2_level': b['sum_co2_level'] / b['count'],
-                'sample_count': b['count'],
+                'timestamp': b['start'],
+                'temperature': b['sum_temperature'] / b['count'],
+                'humidity': b['sum_humidity'] / b['count'],
+                'co2_level': b['sum_co2_level'] / b['count'],
+                'state': most_common_state,
             })
 
         return Response({
             'hive_id': hive.id,
             'displayed_time': displayed_time_period_length,
             'interval_minutes': int(interval.total_seconds() // 60),
-            'aggregated_measurements': aggregated,
+            'measurements': aggregated,
         }, status=status.HTTP_200_OK)
 
     serializer = HiveDetailSerializer(hive)
