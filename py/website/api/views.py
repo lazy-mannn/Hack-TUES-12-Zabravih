@@ -24,7 +24,7 @@ def hive_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     query = request.query_params
-    displayed_time_period_length = query.get('displayed_time', None)
+    displayed_time_period_length = query.get('displayed_time', '24h')  # Default to 24h
 
     if displayed_time_period_length in ('24h', '7d', '14d'):
 
@@ -73,7 +73,7 @@ def hive_detail(request, pk):
             b['sum_humidity'] += m.humidity
             b['sum_co2_level'] += m.co2_level
             if m.state not in b['state_counts']:
-            b['state_counts'][m.state] = 0
+                b['state_counts'][m.state] = 0
             b['state_counts'][m.state] += 1
 
         aggregated = []
@@ -97,9 +97,8 @@ def hive_detail(request, pk):
             'measurements': aggregated,
         }, status=status.HTTP_200_OK)
 
-    serializer = HiveDetailSerializer(hive)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
+    # If invalid displayed_time, return 400 or default
+    return Response({'error': 'Invalid displayed_time. Use 24h, 7d, or 14d.'}, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
 def register_hive(request):
     serializer = HiveRegisterSerializer(data=request.data)
