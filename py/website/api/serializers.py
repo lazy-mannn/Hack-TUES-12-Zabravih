@@ -1,2 +1,48 @@
-# Serializers will be implemented by the backend developer.
-# See BACKEND_TODO.md for the full spec.
+from rest_framework import serializers
+from .models import Hive, HiveMeasurement
+
+class HiveRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hive
+        fields = [
+            'id',
+            'macaddress',
+            'name', 
+            'location'
+        ]
+
+class HiveListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hive
+        fields = [
+            'id',
+            'name', 
+            'location'
+        ]
+    
+class HiveDetailSerializer(serializers.ModelSerializer):
+    measurements = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Hive
+        fields = [
+            'id', 
+            'name', 
+            'location', 
+            'exists_since', 
+            'measurements'
+        ]
+
+
+class HiveMeasurementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HiveMeasurement
+        fields = [
+            'id',
+            'hive',
+            'timestamp',
+            'temperature',
+            'humidity',
+            'co2_level',
+            'state',
+        ]

@@ -1,6 +1,7 @@
 from django.db import models
 
 class Hive(models.Model):
+    macaddress = models.CharField(max_length=17, unique=True)
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     exists_since = models.DateField(auto_now_add=True, auto_now=False)
