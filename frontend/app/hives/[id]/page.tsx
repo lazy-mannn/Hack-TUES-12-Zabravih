@@ -29,20 +29,30 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
   }
 
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen" style={{ background: "#fef3c7" }}>
       <HoneycombBackground />
 
       <div className="relative z-10 px-6 py-10 max-w-4xl mx-auto">
-        {/* Back link outside box */}
-        <Link
-          href="/hives"
-          className="text-white/55 text-sm tracking-widest uppercase hover:text-white transition-colors"
+        {/* Liquid glass card */}
+        <div
+          className="rounded-3xl px-8 py-8 flex flex-col gap-8"
+          style={{
+            background: "rgba(255, 255, 255, 0.40)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
+            border: "1px solid rgba(255, 255, 255, 0.70)",
+            boxShadow:
+              "inset 0 2px 0 rgba(255,255,255,0.90), inset 0 -1px 0 rgba(0,0,0,0.04), 0 24px 48px rgba(0,0,0,0.08)",
+          }}
         >
-          ← Back
-        </Link>
+          {/* Back link */}
+          <Link
+            href="/hives"
+            className="text-amber-900/60 text-sm tracking-widest uppercase hover:text-amber-900 transition-colors font-medium self-start"
+          >
+            ← Back
+          </Link>
 
-        {/* Single glass box */}
-        <div className="mt-6 rounded-3xl backdrop-blur-md bg-white/30 border border-white/35 shadow-2xl px-8 py-8 flex flex-col gap-8">
           {/* Title */}
           <div>
             <h1 className="text-4xl font-black text-gray-900 tracking-widest uppercase">
