@@ -254,4 +254,4 @@ beemodel/queendetection/yamnet-env
 next-env.d.ts
 
 /model-testing
-/media
+media/
