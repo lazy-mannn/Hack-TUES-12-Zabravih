@@ -22,13 +22,13 @@ logger = logging.getLogger('api.measurements')
 from django.conf import settings
 
 YAMNET_PYTHON = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection/yamnet-env/bin/python')
+    os.path.join(os.path.dirname(__file__), '/home/main/Hack-TUES-12-Zabravih/beemodel/queendetection/yamnet-env/bin/python')
 )
 INFERENCE_SCRIPT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection/inference.py')
+    os.path.join(os.path.dirname(__file__), '/home/main/Hack-TUES-12-Zabravih/beemodel/queendetection/inference.py')
 )
 INFERENCE_CWD = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection')
+    os.path.join(os.path.dirname(__file__), '/home/main/Hack-TUES-12-Zabravih/beemodel/queendetection')
 )
 AUDIO_UPLOAD_DIR = os.path.join(settings.MEDIA_ROOT, 'audio')
 
@@ -175,7 +175,11 @@ def hive_detail(request, pk):
                 'avg_co2_level': b['sum_co2_level'] / b['count'],
                 'avg_battery_level': b['sum_battery_level'] / b['count'],
                 'sample_count': b['count'],
-                'dominant_state': max(b['state_counts'], key=b['state_counts'].get) if b['state_counts'] else None,
+                'dominant_state': max(
+                    (s for s in b['state_counts'] if s != 'SNE'),
+                    key=b['state_counts'].get,
+                    default=None,
+                ),
             })
 
         return Response({
