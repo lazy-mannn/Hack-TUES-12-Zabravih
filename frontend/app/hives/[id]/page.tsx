@@ -86,6 +86,12 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
               label="CO₂"
               unit="ppm"
             />
+            <GaugeCircle
+              value={latest?.avg_battery_level ?? null}
+              type="battery"
+              label="Battery"
+              unit="%"
+            />
           </div>
 
           <div className="border-t border-black/10" />

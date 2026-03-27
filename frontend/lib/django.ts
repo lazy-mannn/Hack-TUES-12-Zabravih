@@ -31,6 +31,7 @@ export type AggregatedMeasurement = {
   avg_temperature: number
   avg_humidity: number
   avg_co2_level: number
+  avg_battery_level: number
   sample_count: number
 }
 

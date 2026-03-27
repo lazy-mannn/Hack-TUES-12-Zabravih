@@ -11,7 +11,7 @@ class Hive(models.Model):
 
 class HiveMeasurement(models.Model):
     hive = models.ForeignKey(Hive, on_delete=models.CASCADE, related_name="measurements")
-    battery_level = models.FloatField(help_text="Battery level in percentage")
+    battery_level = models.FloatField(help_text="Battery level in percentage", default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
     temperature = models.FloatField(help_text="Temperature in Celsius")
     humidity = models.FloatField(help_text="Humidity percentage")

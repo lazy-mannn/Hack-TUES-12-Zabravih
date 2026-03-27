@@ -128,9 +128,8 @@ export default function HiveList({ initialHives, fetchError }: Props) {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        transition: "transform 0.15s ease, filter 0.15s ease",
                       }}
-                      className="hover:scale-105 hover:brightness-110"
+                      className="hover:scale-110 transition-transform duration-700 ease-in-out"
                     >
                       <button
                         onClick={() => router.push(`/hives/${hive.id}`)}
