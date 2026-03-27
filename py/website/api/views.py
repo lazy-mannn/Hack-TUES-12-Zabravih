@@ -11,11 +11,13 @@ from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 import subprocess
+import json
 import os
+import logging
 
-import uuid
+logger = logging.getLogger('api.measurements')
 
 from django.conf import settings
 
@@ -35,29 +37,57 @@ LABEL_TO_STATE = {
     'queen present and newly accepted': 'QPNA',
     'queen present and rejected': 'QPR',
     'queen present or original queen': 'QPO',
+    'script not executed' : 'SNE',
 }
 
 
-def run_inference() -> str:
-    """Run inference on the most recently modified file in media/audio/ and return the state code."""
-    files = [
-        os.path.join(AUDIO_UPLOAD_DIR, f)
-        for f in os.listdir(AUDIO_UPLOAD_DIR)
-        if os.path.isfile(os.path.join(AUDIO_UPLOAD_DIR, f))
-    ]
-    if not files:
-        return 'QNP'
+def run_inference(hive_id: int) -> str:
+    """Run inference on the latest audio file for the given hive ID and return the state code.
 
-    latest = max(files, key=os.path.getmtime)
+    Files are expected to be named {hive_id}_{YYYYMMDD_HHMMSS}.{ext}.
+    The one with the latest timestamp in its name is chosen.
+    """
+    prefix = f"{hive_id}_"
+    candidates = []
+    for filename in os.listdir(AUDIO_UPLOAD_DIR):
+        if not filename.startswith(prefix):
+            continue
+        path = os.path.join(AUDIO_UPLOAD_DIR, filename)
+        if not os.path.isfile(path):
+            continue
+        # Parse timestamp from filename: {hive_id}_{YYYYMMDD_HHMMSS}.{ext}
+        stem = filename[len(prefix):].rsplit('.', 1)[0]  # e.g. "20260327_143012"
+        try:
+            ts = datetime.strptime(stem, '%Y%m%d_%H%M%S')
+        except ValueError:
+            continue
+        candidates.append((ts, path))
 
-    result = subprocess.run(
-        [YAMNET_PYTHON, INFERENCE_SCRIPT, latest],
-        capture_output=True,
-        text=True,
-        cwd=INFERENCE_CWD,
-    )
-    label = result.stdout.strip().lower()
-    return LABEL_TO_STATE.get(label, 'QNP')
+    if not candidates:
+        return 'SNE'
+
+    _, latest_path = max(candidates, key=lambda x: x[0])
+
+    try:
+        result = subprocess.run(
+            [YAMNET_PYTHON, INFERENCE_SCRIPT, latest_path],
+            capture_output=True,
+            text=True,
+            cwd=INFERENCE_CWD,
+            timeout=60,
+        )
+        if result.returncode != 0:
+            logger.error('Inference failed (rc=%s): %s', result.returncode, result.stderr.strip())
+            return 'SNE'
+        label = result.stdout.strip().lower()
+        logger.info('Inference raw label: %r', label)
+        return LABEL_TO_STATE.get(label, 'SNE')
+    except subprocess.TimeoutExpired:
+        logger.error('Inference timed out after 60s')
+        return 'SNE'
+    except Exception as e:
+        logger.error('Inference exception: %s', e)
+        return 'SNE'
 
 
 @require_api_key
@@ -168,46 +198,105 @@ def register_hive(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def _to_float(value, default=0.0):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
 def get_measurement(request):
-    mac = request.headers.get('Mac-Address')
-    data = request.data
-    file = request.FILES.get('file')
-    if not mac or not data or not file:
-        return Response({'error': 'No file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    if file.size > 5 * 1024 * 1024:
-        return Response({'error': 'File too large'}, status=status.HTTP_400_BAD_REQUEST)    
-    
-    if file.content_type not in ['audio/wav', 'audio/mpeg', 'audio/x-wav']:
-        return Response({'error': 'Invalid file type'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    hive = get_object_or_404(Hive, macaddress=mac)
+    logger.info('--- incoming measurement request ---')
+    logger.info('Headers: %s', dict(request.headers))
+    logger.info('FILES keys: %s', list(request.FILES.keys()))
+    logger.info('DATA (non-file): %s', {k: v for k, v in request.data.items() if k != 'file'})
 
-    # Save file to media/audio/ so inference can pick it up as the latest file
+    mac = (request.headers.get('X-Mac-Address') or request.headers.get('Mac-Address') or '').lower()
+    logger.info('Resolved MAC: %r', mac)
+    if not mac:
+        logger.warning('Rejected: missing MAC header')
+        return Response({'error': 'Missing X-Mac-Address header'}, status=status.HTTP_403_FORBIDDEN)
+
+    hive = Hive.objects.filter(macaddress=mac).first()
+    if not hive:
+        logger.warning('Rejected: unknown MAC %r', mac)
+        return Response({'error': 'Unknown device 2'}, status=status.HTTP_403_FORBIDDEN)
+    logger.info('Hive matched: id=%s name=%r', hive.id, hive.name)
+
+    file = request.FILES.get('file')
+    if not file:
+        logger.warning('Rejected: no audio file in request')
+        return Response({'error': 'No audio file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
+    logger.info('File: name=%r size=%s content_type=%r', file.name, file.size, file.content_type)
+
+    if file.size > 100 * 1024 * 1024:
+        logger.warning('Rejected: file too large (%s bytes)', file.size)
+        return Response({'error': 'File too large'}, status=status.HTTP_400_BAD_REQUEST)
+
+    ALLOWED_CONTENT_TYPES = {'audio/wav', 'audio/mpeg', 'audio/x-wav', 'application/octet-stream'}
+    if file.content_type not in ALLOWED_CONTENT_TYPES:
+        logger.warning('Rejected: invalid content_type %r', file.content_type)
+        return Response({'error': 'Invalid file type'}, status=status.HTTP_400_BAD_REQUEST)
+
+    raw_data = request.data.get('data', '{}')
+    logger.info('Raw sensor data field: %r', raw_data)
+    try:
+        sensor_data = json.loads(raw_data)
+    except (ValueError, TypeError):
+        sensor_data = {}
+    logger.info('Parsed sensor data: %s', sensor_data)
+
+    # Save file temporarily for inference
     os.makedirs(AUDIO_UPLOAD_DIR, exist_ok=True)
     ext = file.name.rsplit('.', 1)[-1] if '.' in file.name else 'wav'
-    tmp_filename = f"tmp_{uuid.uuid4().hex}.{ext}"
+    ts_str = timezone.now().strftime('%Y%m%d_%H%M%S')
+    tmp_filename = f"{hive.id}_{ts_str}.{ext}"
     tmp_path = os.path.join(AUDIO_UPLOAD_DIR, tmp_filename)
     with open(tmp_path, 'wb') as f:
         for chunk in file.chunks():
             f.write(chunk)
 
     try:
-        state = run_inference()
+        state = run_inference(hive.id)
     finally:
-        os.unlink(tmp_path)
+        if os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+    logger.info('Inference state: %r', state)
 
     file.seek(0)
 
-    data = data.copy()
-    data['hive'] = hive.id
-    data['audio'] = file
-    data['state'] = state
+    # ESP sends sensor values as direct multipart fields; fall back to those
+    # if the nested JSON 'data' field is missing or empty.
+    def _get(key, *aliases, default=0):
+        for k in (key, *aliases):
+            if k in sensor_data:
+                return sensor_data[k]
+            if k in request.data:
+                return request.data[k]
+        return default
 
-    serializer = HiveMeasurementSerializer(data=data)
+    temperature   = _to_float(_get('temperature'))
+    humidity      = _to_float(_get('humidity'))
+    co2_level     = _to_float(_get('co2_level', default=0))
+    battery_level = _to_float(_get('battery_level', 'battery', default=0))
+
+    payload = {
+        'hive': hive.id,
+        'audio': file,
+        'state': state,
+        'temperature': temperature,
+        'humidity': humidity,
+        'co2_level': co2_level,
+        'battery_level': battery_level,
+    }
+    logger.info('Payload (pre-serializer): %s', {k: v for k, v in payload.items() if k != 'audio'})
+
+    serializer = HiveMeasurementSerializer(data=payload)
     if serializer.is_valid():
         serializer.save()
+        logger.info('Measurement saved successfully')
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    logger.error('Serializer errors: %s', serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

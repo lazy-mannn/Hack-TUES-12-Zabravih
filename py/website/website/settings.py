@@ -29,6 +29,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['zabravih.org', 'localhost', '127.0.0.1']
 
+# Prevent Django from issuing 301 redirects for missing trailing slashes.
+# Without this, POST /api/measurements → 301 → GET /api/measurements/ (wrong method).
+APPEND_SLASH = False
+
 SECURE_SSL_REDIRECT = False
 CSRF_TRUSTED_ORIGINS = ['https://zabravih.org']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -157,3 +161,49 @@ AUDIO_UPLOAD_DIR = os.path.join(MEDIA_ROOT, 'audio')
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{asctime}] {levelname} {name} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'django_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+            'maxBytes': 10 * 1024 * 1024,  # 10 MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+        },
+        'requests_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'requests.log'),
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 5,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['django_file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['requests_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'api.measurements': {
+            'handlers': ['requests_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

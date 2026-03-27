@@ -29,7 +29,7 @@ class Command(BaseCommand):
         replace = options["replace"]
 
         # Get all hives except those with ALPHA, BRAVO, CHARLIE, REAL in name
-        skip_keywords = ["ALPHA", "BRAVO", "CHARLIE", "REAL"]
+        skip_keywords = ["REAL", "server"]
         all_hives = Hive.objects.all()
         hives = [h for h in all_hives if not any(keyword in h.name.upper() for keyword in skip_keywords)]
 

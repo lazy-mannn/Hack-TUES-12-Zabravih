@@ -10,7 +10,7 @@ def require_api_key(view_func):
     """
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        mac = request.headers.get('X-Api-Key', '')
+        mac = request.headers.get('X-Api-Key', '').lower()
         if not mac or not Hive.objects.filter(macaddress=mac).exists():
             return JsonResponse({'detail': 'Forbidden'}, status=403)
         return view_func(request, *args, **kwargs)

@@ -17,6 +17,7 @@ import resampy
 import soundfile as sf
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from datetime import datetime
 
 
 logging.basicConfig(
@@ -85,13 +86,18 @@ class Config:
         """Convert paths to absolute paths and ensure output directory exists."""
         self.yamnet_model_path = os.path.abspath(self.yamnet_model_path)
         self.yamnet_classes_path = os.path.abspath(self.yamnet_classes_path)
-        
+
         if self.model_path:
             self.model_path = os.path.abspath(self.model_path)
-        
+
         if self.custom_classes_path:
             self.custom_classes_path = os.path.abspath(self.custom_classes_path)
-        
+
+        # Add timestamp to output filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        name, ext = os.path.splitext(self.output_file)
+        self.output_file = f"{name}_{timestamp}{ext}"
+
         # Create output directory
         os.makedirs(Path(self.output_dir), exist_ok=True)
     
@@ -175,22 +181,27 @@ class AudioClassifier:
     def classify_file(self, audio_path: str) -> Dict[str, Any]:
         """Classify audio file and return results."""
         logger.info(f"Processing audio file: {audio_path}")
-        
+
+        # Save results alongside the input file
+        self.config.output_dir = os.path.dirname(os.path.abspath(audio_path))
+
         # Load audio
         waveform, sr = self._load_audio(audio_path)
-        
+
         # Process audio segments
         logger.info("Processing audio segments...")
         segments_results = self._process_audio_segments(waveform, sr)
-        
+
         # Aggregate results
         logger.info("Aggregating results...")
         final_results = self._aggregate_results(segments_results)
-        
+        final_results['audio_path'] = os.path.abspath(audio_path)
+        final_results['classified_at'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         # Save results
         if self.config.output_path:
             self._save_results(final_results)
-        
+
         return final_results
     
     def _load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
@@ -400,8 +411,10 @@ class AudioClassifier:
             with open(self.config.output_path, 'w') as file:
                 file.write("Audio Classification Results\n")
                 file.write("=========================\n\n")
+                file.write(f"Input File: {results['audio_path']}\n")
+                file.write(f"Classified At: {results['classified_at']}\n\n")
                 file.write(f"Primary Classification: {results['dominant_label']} ({results['dominant_score_percentage']}%)\n\n")
-                
+
                 # Add detailed breakdown
                 file.write("Classification Details:\n")
                 file.write("-----------------\n")
@@ -424,22 +437,24 @@ class AudioClassifier:
 
 def main():
     """Main function to run audio classification."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
     parser = argparse.ArgumentParser(
         description='Audio classification using YAMNet and custom models',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    
+
     # Required arguments
     parser.add_argument('audio_file', type=str, help='Path to audio file for classification')
-    
+
     # Model paths
-    parser.add_argument('--yamnet_model', type=str, default='yamnet/yamnet.h5', 
+    parser.add_argument('--yamnet_model', type=str, default=os.path.join(script_dir, 'yamnet/yamnet.h5'),
                         help='Path to YAMNet model weights')
-    parser.add_argument('--yamnet_classes', type=str, default='yamnet/yamnet_class_map.csv', 
+    parser.add_argument('--yamnet_classes', type=str, default=os.path.join(script_dir, 'yamnet/yamnet_class_map.csv'),
                         help='Path to YAMNet class names')
-    parser.add_argument('--model', type=str, default='model/model.h5', 
+    parser.add_argument('--model', type=str, default=os.path.join(script_dir, 'model/model.h5'),
                         help='Path to custom model (optional)')
-    parser.add_argument('--custom_classes', type=str, default='model/model.npy', 
+    parser.add_argument('--custom_classes', type=str, default=os.path.join(script_dir, 'model/model.npy'),
                         help='Path to custom class names (optional)')
     
     # Processing parameters

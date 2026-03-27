@@ -6,6 +6,11 @@ class Hive(models.Model):
     location = models.CharField(max_length=200)
     exists_since = models.DateField(auto_now_add=True, auto_now=False)
 
+    def save(self, *args, **kwargs):
+        if self.macaddress:
+            self.macaddress = self.macaddress.lower()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -21,7 +26,8 @@ class HiveMeasurement(models.Model):
         ('QNP', 'QUEEN NOT PRESENT'),
         ('QPNA', 'QUEEN PRESENT NEWLY ACCEPTED'),
         ('QPR', 'QUEEN PRESENT AND REJECTED'),
-        ('QPO', 'QUEEEN PRESENT(ORIGINAL)')
+        ('QPO', 'QUEEEN PRESENT(ORIGINAL)'),
+        ('SNE', 'script not executed'),
         ]
     
     state = models.CharField(max_length=4, choices=STATE_CHOICES)
