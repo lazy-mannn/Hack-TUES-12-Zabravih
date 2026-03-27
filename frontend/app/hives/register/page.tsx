@@ -13,16 +13,26 @@ export default function RegisterPage() {
   );
 
   const inputClass =
-    "w-full bg-white/55 border-2 border-gray-900/45 text-gray-950 placeholder-gray-600/60 rounded-lg px-5 py-3 outline-none focus:border-gray-800 text-base";
+    "w-full bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-400 rounded-lg px-5 py-3 outline-none focus:border-amber-400 transition-colors text-base";
 
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen" style={{ background: "#fef3c7" }}>
       <HoneycombBackground />
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-10">
-        <div className="w-full max-w-md rounded-3xl backdrop-blur-md bg-white/35 border border-white/40 shadow-2xl px-8 py-10">
+        <div
+          className="w-full max-w-md rounded-3xl px-8 py-10"
+          style={{
+            background: "rgba(255, 255, 255, 0.40)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.70)",
+            boxShadow:
+              "inset 0 2px 0 rgba(255,255,255,0.90), inset 0 -1px 0 rgba(0,0,0,0.04), 0 24px 48px rgba(0,0,0,0.08)",
+          }}
+        >
           <button
             onClick={() => router.push("/hives")}
-            className="text-gray-700/70 text-sm tracking-widest uppercase mb-6 hover:text-gray-900 transition-colors flex items-center gap-2"
+            className="text-gray-400 text-sm tracking-widest uppercase mb-6 hover:text-gray-700 transition-colors flex items-center gap-2"
           >
             ← Back
           </button>
@@ -71,7 +81,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={pending}
-              className="mt-2 w-full py-3 rounded-xl font-semibold tracking-widest uppercase text-gray-900 text-base cursor-pointer border-2 border-yellow-700/40 bg-yellow-200/35 hover:bg-yellow-200/55 hover:border-yellow-700/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-2 w-full py-3 rounded-xl font-semibold tracking-widest uppercase text-amber-900 text-base cursor-pointer border-2 border-amber-400 bg-amber-100 hover:bg-amber-200 hover:border-amber-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {pending ? "Registering…" : "Register"}
             </button>

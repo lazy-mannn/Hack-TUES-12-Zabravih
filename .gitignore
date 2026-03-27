@@ -244,6 +244,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+beemodel/queendetection/yamnet-env
 
 # vercel
 .vercel

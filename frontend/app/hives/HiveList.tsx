@@ -74,14 +74,14 @@ export default function HiveList({ initialHives, fetchError }: Props) {
           placeholder="Search by name…"
           value={nameQuery}
           onChange={(e) => setNameQuery(e.target.value)}
-          className="flex-1 bg-white/35 border-2 border-gray-900/50 text-gray-950 placeholder-gray-600/70 rounded-lg px-5 py-3 outline-none focus:border-gray-900 text-base"
+          className="flex-1 bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-400 rounded-lg px-5 py-3 outline-none focus:border-amber-400 transition-colors text-base shadow-sm"
         />
         <input
           type="text"
           placeholder="Search by location…"
           value={locationQuery}
           onChange={(e) => setLocationQuery(e.target.value)}
-          className="flex-1 bg-white/35 border-2 border-gray-900/50 text-gray-950 placeholder-gray-600/70 rounded-lg px-5 py-3 outline-none focus:border-gray-900 text-base"
+          className="flex-1 bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-400 rounded-lg px-5 py-3 outline-none focus:border-amber-400 transition-colors text-base shadow-sm"
         />
       </div>
 
@@ -114,37 +114,51 @@ export default function HiveList({ initialHives, fetchError }: Props) {
                   }}
                 >
                   {row.map((hive) => (
-                    <button
+                    <div
                       key={hive.id}
-                      onClick={() => router.push(`/hives/${hive.id}`)}
                       style={{
                         width: layout.hexW,
                         height: layout.hexH,
                         flexShrink: 0,
                         clipPath:
                           "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-                        background:
-                          "linear-gradient(160deg, #fefce8 0%, #fde68a 100%)",
-                        boxShadow:
-                          "0 4px 28px rgba(234,179,8,0.3), 0 0 0 3px rgba(0,0,0,0.15)",
+                        background: "#fbbf24",
+                        filter:
+                          "drop-shadow(0 0 5px rgba(245,158,11,0.55)) drop-shadow(0 4px 10px rgba(120,53,15,0.18))",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                         transition: "transform 0.15s ease, filter 0.15s ease",
                       }}
-                      className="cursor-pointer flex flex-col items-center justify-center border-0 p-0 hover:scale-105 hover:brightness-125"
-                      aria-label={`Open hive ${hive.name}`}
+                      className="hover:scale-105 hover:brightness-110"
                     >
-                      <span
-                        className="font-black leading-tight text-center break-words"
-                        style={{ fontSize: Math.max(13, layout.hexW * 0.1), padding: `0 ${layout.hexW * 0.12}px`, color: "#92400e" }}
+                      <button
+                        onClick={() => router.push(`/hives/${hive.id}`)}
+                        style={{
+                          width: layout.hexW - 3,
+                          height: layout.hexH - 3,
+                          clipPath:
+                            "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+                          background:
+                            "linear-gradient(160deg, #fefce8 0%, #fde68a 60%, #fbbf24 100%)",
+                        }}
+                        className="cursor-pointer flex flex-col items-center justify-center border-0 p-0"
+                        aria-label={`Open hive ${hive.name}`}
                       >
-                        {hive.name}
-                      </span>
-                      <span
-                        className="mt-1 text-center break-words"
-                        style={{ fontSize: Math.max(11, layout.hexW * 0.082), padding: `0 ${layout.hexW * 0.12}px`, color: "#b45309" }}
-                      >
-                        {hive.location}
-                      </span>
-                    </button>
+                        <span
+                          className="font-black leading-tight text-center break-words"
+                          style={{ fontSize: Math.max(13, layout.hexW * 0.1), padding: `0 ${layout.hexW * 0.12}px`, color: "#92400e" }}
+                        >
+                          {hive.name}
+                        </span>
+                        <span
+                          className="mt-1 text-center break-words"
+                          style={{ fontSize: Math.max(11, layout.hexW * 0.082), padding: `0 ${layout.hexW * 0.12}px`, color: "#b45309" }}
+                        >
+                          {hive.location}
+                        </span>
+                      </button>
+                    </div>
                   ))}
                 </div>
               ))}
