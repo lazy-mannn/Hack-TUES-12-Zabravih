@@ -3,6 +3,7 @@
 
 #include <NimBLEDevice.h>
 #include <Preferences.h>
+#include "logging.h"
 
 // ======================== BLE CONFIGURATION ========================
 #define BLE_DEVICE_NAME "ESP32_Provisioner"
@@ -22,7 +23,7 @@ extern Preferences preferences;
 class SSIDCharacteristicCallback : public NimBLECharacteristicCallbacks {
     void onWrite(NimBLECharacteristic* pCharacteristic) {
         std::string ssid = pCharacteristic->getValue();
-        Serial.printf("BLE SSID received: %s\n", ssid.c_str());
+        logf("BLE", "BLE SSID received: %s", ssid.c_str());
     }
 };
 
@@ -32,7 +33,7 @@ class PasswordCharacteristicCallback : public NimBLECharacteristicCallbacks {
         std::string password = pCharacteristic->getValue();
         
         if (ssid.length() > 0 && password.length() > 0) {
-            Serial.printf("BLE WiFi received - SSID: %s, Password: %s\n", ssid.c_str(), password.c_str());
+            logf("BLE", "BLE WiFi received - SSID: %s, Password: %s", ssid.c_str(), password.c_str());
             
             // Save credentials
             preferences.begin("wifi-provision", false);
@@ -40,7 +41,7 @@ class PasswordCharacteristicCallback : public NimBLECharacteristicCallbacks {
             preferences.putString("password", String(password.c_str()));
             preferences.end();
             
-            Serial.println("WiFi credentials saved! Rebooting...");
+            log_line("BLE", "WiFi credentials saved! Rebooting...");
             delay(1000);
             ESP.restart();
         }
@@ -49,20 +50,20 @@ class PasswordCharacteristicCallback : public NimBLECharacteristicCallbacks {
 
 class BLEServerCallback : public NimBLEServerCallbacks {
     void onConnect(NimBLEServer* pServer) {
-        Serial.println("BLE Client connected");
+        log_line("BLE", "BLE Client connected");
         bleConnected = true;
         NimBLEDevice::startAdvertising();
     }
     
     void onDisconnect(NimBLEServer* pServer) {
-        Serial.println("BLE Client disconnected");
+        log_line("BLE", "BLE Client disconnected");
         bleConnected = false;
     }
 };
 
 // ======================== BLE FUNCTIONS ========================
 inline void initBLEProvisioner() {
-    Serial.println("Initializing BLE provisioner...");
+    log_line("BLE", "Initializing BLE provisioner...");
     NimBLEDevice::init(BLE_DEVICE_NAME);
     
     pBLEServer = NimBLEDevice::createServer();
@@ -88,7 +89,7 @@ inline void initBLEProvisioner() {
     passCharacteristic->setValue("WiFi Password");
     
     pService->start();
-    Serial.println("BLE provisioner initialized");
+    log_line("BLE", "BLE provisioner initialized");
 }
 
 inline void startBLEProvisioner() {
@@ -105,14 +106,14 @@ inline void startBLEProvisioner() {
     NimBLEDevice::startAdvertising();
     
     blePowered = true;
-    Serial.println("BLE advertising started");
+    log_line("BLE", "BLE advertising started");
 }
 
 inline void stopBLEProvisioner() {
     if (pBLEServer != nullptr) {
         NimBLEDevice::stopAdvertising();
         blePowered = false;
-        Serial.println("BLE advertising stopped");
+        log_line("BLE", "BLE advertising stopped");
     }
 }
 

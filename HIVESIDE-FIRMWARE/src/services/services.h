@@ -5,13 +5,12 @@
 #include "sensors.h"
 #include "microphone.h"
 
-extern uint8_t temp;
-extern uint8_t hum;
+extern float temp;
+extern float hum;
+extern float iaq;
 extern bool successfulInit;
 extern TaskHandle_t initTask_handle;
-extern TaskHandle_t visualizerTask_handle;
-extern TaskHandle_t datasenderTask_handle;
+extern TaskHandle_t appTask_handle;
 
-void visualizerTask(void * params);
-void datasenderTask(void * params);
 void initializeTask(void * params);
+void appTask(void * params);

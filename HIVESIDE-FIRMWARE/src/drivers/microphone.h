@@ -13,9 +13,9 @@
 #define I2S_DMA_BUF_LEN 1024
 
 // Pin assignments for I2S microphone
-#define I2S_CLK_PIN 17   // GPIO17 (BCLK)
-#define I2S_WS_PIN 16    // GPIO16 (LRCLK/WS)
-#define I2S_DATA_PIN 42  // GPIO42 (DOUT/SD)
+#define I2S_CLK_PIN 13   // GPIO13 (BCLK/SCK)
+#define I2S_WS_PIN 12    // GPIO12 (LRCLK/WS)
+#define I2S_DATA_PIN 14  // GPIO14 (DOUT/SD)
 
 // ======================== MICROPHONE FUNCTIONS ========================
 int microphone_begin();

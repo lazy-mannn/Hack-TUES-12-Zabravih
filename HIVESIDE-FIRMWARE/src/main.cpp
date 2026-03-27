@@ -5,6 +5,7 @@
 #include <sensors.h>
 #include <microphone.h>
 #include "services.h"
+#include "logging.h"
 
 #include <Preferences.h>
 #include "BLE_Provisioner.h"
@@ -31,7 +32,7 @@ void handleButtonReset()
   {
     buttonPressTime = millis();
     buttonPressed = true;
-    Serial.println("\nButton pressed. Release within 3 seconds to toggle BLE, hold for 3 seconds to reset WiFi...");
+    log_line("BTN", "Button pressed. Release within 3 seconds to toggle BLE, hold for 3 seconds to reset WiFi...");
   }
 
   if (buttonState == HIGH && buttonPressed)
@@ -68,32 +69,33 @@ void printStatus()
   {
     lastPrintTime = millis();
 
-    Serial.print(" | STA: ");
-    Serial.print(isWiFiConnected() ? "Connected" : "Disconnected");
+    String statusMsg = " | STA: ";
+    statusMsg += isWiFiConnected() ? "Connected" : "Disconnected";
     if (isWiFiConnected())
     {
-      Serial.print(" | IP: ");
-      Serial.print(getWiFiIP());
+      statusMsg += " | IP: ";
+      statusMsg += getWiFiIP().toString();
     }
-    Serial.print(" | BLE: ");
+    statusMsg += " | BLE: ";
     if (blePowered)
     {
-      Serial.print(bleConnected ? "Connected" : "Advertising");
+      statusMsg += bleConnected ? "Connected" : "Advertising";
     }
     else
     {
-      Serial.print("Off");
+      statusMsg += "Off";
     }
-    Serial.println();
+    logf("SYS", "%s", statusMsg.c_str());
   }
 }
 
 void setup()
 {
   Serial.begin(2000000);
+  logging_init();
   delay(2000);
 
-  Serial.println("\n\n=== ESP32-S3 WiFi AP+STA with BLE ===");
+  log_line("SYS", "=== ESP32-S3 WiFi AP+STA with BLE ===");
 
   pinMode(buttonPin, INPUT_PULLUP);
 
@@ -103,8 +105,8 @@ void setup()
   // Try to connect to saved WiFi
   if (!connectToWiFi())
   {
-    Serial.println("\nNote: Press button to enable BLE for WiFi provisioning");
-    Serial.println("Or press button for 3 seconds to reset WiFi credentials");
+    log_line("SYS", "Note: Press button to enable BLE for WiFi provisioning");
+    log_line("SYS", "Or press button for 3 seconds to reset WiFi credentials");
   }
 
   xTaskCreatePinnedToCore(initializeTask, "initTask", 8192, NULL, 1, &initTask_handle, 0);

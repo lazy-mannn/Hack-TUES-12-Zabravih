@@ -3,6 +3,7 @@
 
 #include <WiFi.h>
 #include <Preferences.h>
+#include "logging.h"
 
 // ======================== WIFI STA CONFIGURATION ========================
 #define WIFI_CONNECTION_TIMEOUT 20000  // 20 seconds
@@ -20,11 +21,11 @@ inline bool connectToWiFi() {
   // ... omitting unchanged logic inside for a moment, let's just do it cleanly.
 
   if (savedSSID.isEmpty()) {
-    Serial.println("No saved Wi-Fi credentials found.");
+    log_line("WIFI", "No saved Wi-Fi credentials found.");
     return false;
   }
 
-  Serial.printf("Connecting to saved Wi-Fi: %s\n", savedSSID.c_str());
+  logf("WIFI", "Connecting to saved Wi-Fi: %s", savedSSID.c_str());
 
   // Setup mode but don't disconnect manually right now to avoid warning
   WiFi.mode(WIFI_STA);
@@ -38,16 +39,14 @@ inline bool connectToWiFi() {
   unsigned long startTime = millis();
   while (WiFi.status() != WL_CONNECTED) {
     if (millis() - startTime > WIFI_CONNECTION_TIMEOUT) {
-      Serial.println("Failed to connect to saved Wi-Fi.");
+      log_line("WIFI", "Failed to connect to saved Wi-Fi.");
       return false;
     }
     delay(500);
-    Serial.print(".");
+    log_line("WIFI", "Waiting for Wi-Fi...");
   }
 
-  Serial.printf("\nSuccessfully connected to %s\n", savedSSID.c_str());
-  Serial.print("IP: ");
-  Serial.println(WiFi.localIP());
+  logf("WIFI", "Successfully connected to %s | IP: %s", savedSSID.c_str(), WiFi.localIP().toString().c_str());
   return true;
 }
 
@@ -56,14 +55,14 @@ inline void saveWiFiCredentials(const char* ssid, const char* password) {
   preferences.putString("ssid", String(ssid));
   preferences.putString("password", String(password));
   preferences.end();
-  Serial.printf("WiFi credentials saved: %s\n", ssid);
+  logf("WIFI", "WiFi credentials saved: %s", ssid);
 }
 
 inline void clearWiFiCredentials() {
   preferences.begin("wifi-provision", false);
   preferences.clear();
   preferences.end();
-  Serial.println("WiFi credentials cleared. Factory reset complete.");
+  log_line("WIFI", "WiFi credentials cleared. Factory reset complete.");
 }
 
 inline bool isWiFiConnected() {
