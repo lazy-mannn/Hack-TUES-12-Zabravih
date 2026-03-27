@@ -3,7 +3,7 @@
 const R = 46;
 const CIRC = 2 * Math.PI * R;
 
-type GaugeType = "temperature" | "humidity" | "co2";
+type GaugeType = "temperature" | "humidity" | "co2" | "battery";
 
 function getColor(value: number, type: GaugeType): string {
   if (type === "temperature") {
@@ -14,6 +14,11 @@ function getColor(value: number, type: GaugeType): string {
   if (type === "humidity") {
     if (value >= 50 && value <= 70) return "#22c55e";
     if (value >= 30 && value <= 80) return "#eab308";
+    return "#ef4444";
+  }
+  if (type === "battery") {
+    if (value >= 50) return "#22c55e";
+    if (value >= 20) return "#eab308";
     return "#ef4444";
   }
   // co2 ppm
@@ -30,7 +35,7 @@ type Props = {
 };
 
 export default function GaugeCircle({ value, type, label, unit }: Props) {
-  const maxVal = type === "temperature" ? 50 : type === "humidity" ? 100 : 5000;
+  const maxVal = type === "temperature" ? 50 : type === "humidity" ? 100 : type === "battery" ? 100 : 5000;
   const fraction = value !== null ? Math.min(1, Math.max(0, value / maxVal)) : 0;
   const color = value !== null ? getColor(value, type) : "#6b7280";
   const dash = CIRC * fraction;
@@ -40,7 +45,9 @@ export default function GaugeCircle({ value, type, label, unit }: Props) {
       ? "—"
       : type === "co2"
         ? Math.round(value).toString()
-        : value.toFixed(1);
+        : type === "battery"
+          ? Math.round(value).toString()
+          : value.toFixed(1);
 
   return (
     <div className="flex flex-col items-center gap-2">
