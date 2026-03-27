@@ -12,6 +12,53 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser
 
 from datetime import timedelta
+import subprocess
+import os
+
+import uuid
+
+from django.conf import settings
+
+YAMNET_PYTHON = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection/yamnet-env/bin/python')
+)
+INFERENCE_SCRIPT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection/inference.py')
+)
+INFERENCE_CWD = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../../../beemodel/queendetection')
+)
+AUDIO_UPLOAD_DIR = os.path.join(settings.MEDIA_ROOT, 'audio')
+
+LABEL_TO_STATE = {
+    'queen not present': 'QNP',
+    'queen present and newly accepted': 'QPNA',
+    'queen present and rejected': 'QPR',
+    'queen present or original queen': 'QPO',
+}
+
+
+def run_inference() -> str:
+    """Run inference on the most recently modified file in media/audio/ and return the state code."""
+    files = [
+        os.path.join(AUDIO_UPLOAD_DIR, f)
+        for f in os.listdir(AUDIO_UPLOAD_DIR)
+        if os.path.isfile(os.path.join(AUDIO_UPLOAD_DIR, f))
+    ]
+    if not files:
+        return 'QNP'
+
+    latest = max(files, key=os.path.getmtime)
+
+    result = subprocess.run(
+        [YAMNET_PYTHON, INFERENCE_SCRIPT, latest],
+        capture_output=True,
+        text=True,
+        cwd=INFERENCE_CWD,
+    )
+    label = result.stdout.strip().lower()
+    return LABEL_TO_STATE.get(label, 'QNP')
+
 
 @require_api_key
 @api_view(['GET'])
@@ -98,6 +145,7 @@ def hive_detail(request, pk):
                 'avg_co2_level': b['sum_co2_level'] / b['count'],
                 'avg_battery_level': b['sum_battery_level'] / b['count'],
                 'sample_count': b['count'],
+                'dominant_state': max(b['state_counts'], key=b['state_counts'].get) if b['state_counts'] else None,
             })
 
         return Response({
@@ -136,10 +184,27 @@ def get_measurement(request):
         return Response({'error': 'Invalid file type'}, status=status.HTTP_400_BAD_REQUEST)
     
     hive = get_object_or_404(Hive, macaddress=mac)
-    
+
+    # Save file to media/audio/ so inference can pick it up as the latest file
+    os.makedirs(AUDIO_UPLOAD_DIR, exist_ok=True)
+    ext = file.name.rsplit('.', 1)[-1] if '.' in file.name else 'wav'
+    tmp_filename = f"tmp_{uuid.uuid4().hex}.{ext}"
+    tmp_path = os.path.join(AUDIO_UPLOAD_DIR, tmp_filename)
+    with open(tmp_path, 'wb') as f:
+        for chunk in file.chunks():
+            f.write(chunk)
+
+    try:
+        state = run_inference()
+    finally:
+        os.unlink(tmp_path)
+
+    file.seek(0)
+
     data = data.copy()
     data['hive'] = hive.id
     data['audio'] = file
+    data['state'] = state
 
     serializer = HiveMeasurementSerializer(data=data)
     if serializer.is_valid():

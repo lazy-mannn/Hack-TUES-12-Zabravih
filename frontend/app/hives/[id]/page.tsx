@@ -94,6 +94,28 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
             />
           </div>
 
+          {/* Queen state */}
+          {latest?.dominant_state && (() => {
+            const STATE_LABELS: Record<string, { label: string; color: string }> = {
+              QPO:  { label: "Queen Present (Original)",         color: "#16a34a" },
+              QPNA: { label: "Queen Present — Newly Accepted",   color: "#ca8a04" },
+              QPR:  { label: "Queen Present — Rejected",        color: "#dc2626" },
+              QNP:  { label: "Queen Not Present",               color: "#dc2626" },
+            };
+            const s = STATE_LABELS[latest.dominant_state!];
+            return s ? (
+              <div className="flex items-center justify-center gap-2">
+                <span
+                  className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: s.color }}
+                />
+                <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: s.color }}>
+                  {s.label}
+                </span>
+              </div>
+            ) : null;
+          })()}
+
           <div className="border-t border-black/10" />
 
           {/* Graphs */}

@@ -33,6 +33,7 @@ export type AggregatedMeasurement = {
   avg_co2_level: number
   avg_battery_level: number
   sample_count: number
+  dominant_state: "QNP" | "QPNA" | "QPR" | "QPO" | null
 }
 
 export type HiveMetrics = {
