@@ -37,12 +37,20 @@ class HiveDetailSerializer(serializers.ModelSerializer):
 class HiveMeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = HiveMeasurement
-        fields = [
-            'id',
-            'hive',
-            'timestamp',
-            'temperature',
-            'humidity',
-            'co2_level',
-            'state',
-        ]
+        fields = '__all__'
+    
+    def create(self, validated_data):
+        audio_file = validated_data.get('audio')
+        
+        instance = HiveMeasurement.objects.create(**validated_data)
+        
+        if audio_file:
+            timestamp = instance.timestamp.strftime('%Y%m%d_%H%M%S')
+            original_name = audio_file.name
+            file_ext = original_name.split('.')[-1] if '.' in original_name else 'wav'
+            new_filename = f"{instance.id}_{timestamp}.{file_ext}"
+            
+            instance.audio.save(f"audio/{new_filename}", audio_file, save=False)
+            instance.save()
+        
+        return instance

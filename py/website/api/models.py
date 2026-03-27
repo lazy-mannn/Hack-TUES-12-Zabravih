@@ -24,6 +24,7 @@ class HiveMeasurement(models.Model):
         ]
     
     state = models.CharField(max_length=4, choices=STATE_CHOICES)
+    audio = models.FileField(upload_to='audio/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.hive.name} - {self.timestamp}"

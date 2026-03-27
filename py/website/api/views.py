@@ -4,8 +4,9 @@ from .authentication import require_api_key
 from django.http import HttpResponse
 from django.db.models import Q
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -27,7 +28,7 @@ def hive_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     query = request.query_params
-    displayed_time_period_length = query.get('displayed_time', None)
+    displayed_time_period_length = query.get('displayed_time')
 
     if displayed_time_period_length in ('24h', '7d', '14d'):
 
@@ -55,7 +56,7 @@ def hive_detail(request, pk):
         for m in measurements_qs:
             ts = m.timestamp if m.timestamp.tzinfo else timezone.make_aware(m.timestamp)
             # bucket index from start_time
-            elapsed = ts - start_time 
+            elapsed = ts - start_time
             bucket_index = int(elapsed.total_seconds() // interval.total_seconds())
             bucket_start = start_time + bucket_index * interval
             key = bucket_start.isoformat()
@@ -67,6 +68,7 @@ def hive_detail(request, pk):
                     'sum_temperature': 0.0,
                     'sum_humidity': 0.0,
                     'sum_co2_level': 0.0,
+                    'state_counts': {},
                 }
 
             b = buckets[key]
@@ -74,15 +76,20 @@ def hive_detail(request, pk):
             b['sum_temperature'] += m.temperature
             b['sum_humidity'] += m.humidity
             b['sum_co2_level'] += m.co2_level
+            if m.state not in b['state_counts']:
+                b['state_counts'][m.state] = 0
+            b['state_counts'][m.state] += 1
 
         aggregated = []
         for key in sorted(buckets.keys()):
             b = buckets[key]
             if b['count'] == 0:
                 continue
+            bucket_start = b['start']
+            bucket_end = bucket_start + interval
             aggregated.append({
-                'bucket_start': b['start'],
-                'bucket_end': b['start'] + interval,
+                'bucket_start': bucket_start.isoformat(),
+                'bucket_end': bucket_end.isoformat(),
                 'avg_temperature': b['sum_temperature'] / b['count'],
                 'avg_humidity': b['sum_humidity'] / b['count'],
                 'avg_co2_level': b['sum_co2_level'] / b['count'],
@@ -103,6 +110,34 @@ def hive_detail(request, pk):
 @api_view(['POST'])
 def register_hive(request):
     serializer = HiveRegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@parser_classes([MultiPartParser])
+def get_measurement(request):
+    mac = request.headers.get('X-Device-ID')
+    data = request.data
+    file = request.FILES.get('file')
+    if not mac or not data or not file:
+        return Response({'error': 'No file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if file.size > 5 * 1024 * 1024:
+        return Response({'error': 'File too large'}, status=status.HTTP_400_BAD_REQUEST)    
+    
+    if file.content_type not in ['audio/wav', 'audio/mpeg', 'audio/x-wav']:
+        return Response({'error': 'Invalid file type'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    hive = get_object_or_404(Hive, macaddress=mac)
+    
+    data = data.copy()
+    data['hive'] = hive.id
+    data['audio'] = file
+
+    serializer = HiveMeasurementSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
