@@ -119,7 +119,7 @@ def register_hive(request):
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
 def get_measurement(request):
-    mac = request.headers.get('X-Device-ID')
+    mac = request.headers.get('Mac-Address')
     data = request.data
     file = request.FILES.get('file')
     if not mac or not data or not file:
