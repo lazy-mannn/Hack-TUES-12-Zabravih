@@ -480,25 +480,25 @@ def main():
         # Process audio file
         results = classifier.classify_file(args.audio_file)
         
-        # Print results
-        print("\nAudio Classification Results")
-        print("=========================")
-        print(f"\nPrimary Classification: {results['dominant_label']} ({results['dominant_score_percentage']}%)")
-        
+        # Always print just the label for easy machine consumption
+        print(results['dominant_label'])
+
         if args.verbose:
-            print("\nTop 10 Predictions:")
-            print("-----------------")
+            import sys
+            print("\nAudio Classification Results", file=sys.stderr)
+            print("=========================", file=sys.stderr)
+            print(f"Score: {results['dominant_score_percentage']}%", file=sys.stderr)
+            print("\nTop 10 Predictions:", file=sys.stderr)
+            print("-----------------", file=sys.stderr)
             sorted_predictions = sorted(
                 results['aggregated_predictions'].items(),
                 key=lambda x: x[1],
                 reverse=True
             )
-            
             for label, score in sorted_predictions:
                 percentage = round(score * 100)
-                print(f"{label}: {percentage}%")
-                
-        print(f"\nFull results saved to: {config.output_path}")
+                print(f"{label}: {percentage}%", file=sys.stderr)
+            print(f"\nFull results saved to: {config.output_path}", file=sys.stderr)
         
     except Exception as e:
         logger.error(f"Error: {e}")
