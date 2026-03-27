@@ -106,6 +106,45 @@ export default function HoneycombBackground() {
         }}
       />
 
+      {/* Animations */}
+      <style>{`
+        @keyframes honey-drop {
+          0%   { transform: scaleY(0.04); opacity: 0; }
+          18%  { transform: scaleY(0.55); opacity: 1; }
+          52%  { transform: scaleY(1.00); opacity: 1; }
+          78%  { transform: scaleY(1.20) translateY(10px); opacity: 0.65; }
+          100% { transform: scaleY(1.50) translateY(28px); opacity: 0; }
+        }
+        @keyframes bee-fly-1 {
+          0%   { transform: rotate(var(--r)) translate(0px,  0px); }
+          20%  { transform: rotate(var(--r)) translate(4px,  -7px); }
+          45%  { transform: rotate(var(--r)) translate(-3px, -12px); }
+          70%  { transform: rotate(var(--r)) translate(-5px, -5px); }
+          100% { transform: rotate(var(--r)) translate(0px,  0px); }
+        }
+        @keyframes bee-fly-2 {
+          0%   { transform: rotate(var(--r)) translate(0px,   0px); }
+          25%  { transform: rotate(var(--r)) translate(-5px, -8px); }
+          55%  { transform: rotate(var(--r)) translate(3px,  -14px); }
+          80%  { transform: rotate(var(--r)) translate(6px,  -6px); }
+          100% { transform: rotate(var(--r)) translate(0px,   0px); }
+        }
+        @keyframes bee-fly-3 {
+          0%   { transform: rotate(var(--r)) translate(0px,  0px); }
+          30%  { transform: rotate(var(--r)) translate(6px,  -5px); }
+          60%  { transform: rotate(var(--r)) translate(2px,  -11px); }
+          80%  { transform: rotate(var(--r)) translate(-4px, -8px); }
+          100% { transform: rotate(var(--r)) translate(0px,  0px); }
+        }
+        @keyframes bee-fly-4 {
+          0%   { transform: rotate(var(--r)) translate(0px,   0px); }
+          35%  { transform: rotate(var(--r)) translate(-6px, -10px); }
+          65%  { transform: rotate(var(--r)) translate(4px,  -14px); }
+          85%  { transform: rotate(var(--r)) translate(5px,  -4px); }
+          100% { transform: rotate(var(--r)) translate(0px,   0px); }
+        }
+      `}</style>
+
       {/* Bee decorations */}
       {BEES.map((b, i) => (
         <div
@@ -114,12 +153,20 @@ export default function HoneycombBackground() {
             position: "absolute",
             left: b.left,
             top: b.top,
-            transform: `rotate(${b.rotate}deg)`,
-            opacity: b.opacity,
-            filter: "contrast(1.6) saturate(1.5) drop-shadow(0 3px 6px rgba(0,0,0,0.30))",
           }}
         >
-          <BeeSVG size={b.size} />
+          <div
+            style={{
+              opacity: b.opacity,
+              filter: "contrast(1.6) saturate(1.5) drop-shadow(0 3px 6px rgba(0,0,0,0.30))",
+              // CSS custom property carries the rotation into the keyframe
+              ["--r" as string]: `${b.rotate}deg`,
+              animation: `bee-fly-${(i % 4) + 1} ${3.2 + (i % 5) * 0.45}s ease-in-out infinite`,
+              animationDelay: `${(i * 0.37) % 2.5}s`,
+            }}
+          >
+            <BeeSVG size={b.size} />
+          </div>
         </div>
       ))}
     </div>
