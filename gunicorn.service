@@ -6,7 +6,7 @@ After=network.target
 User=main
 Group=www-data
 WorkingDirectory=/home/main/Hack-TUES-12-Zabravih/py/website
-ExecStart=/home/main/Hack-TUES-12-Zabravih/py/env/bin/gunicorn --access-logfile - --workers 3 --bind 127.0.0.1:8000 website.wsgi:application
+ExecStart=/home/main/Hack-TUES-12-Zabravih/py/env/bin/gunicorn --access-logfile - --workers 16 --bind 127.0.0.1:8000 website.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
