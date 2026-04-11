@@ -27,14 +27,14 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['zabravih.org', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['smeehive.zabravih.org', 'localhost', '127.0.0.1']
 
 # Prevent Django from issuing 301 redirects for missing trailing slashes.
 # Without this, POST /api/measurements → 301 → GET /api/measurements/ (wrong method).
 APPEND_SLASH = False
 
 SECURE_SSL_REDIRECT = False
-CSRF_TRUSTED_ORIGINS = ['https://zabravih.org']
+CSRF_TRUSTED_ORIGINS = ['https://smeehive.zabravih.org']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -70,7 +70,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://zabravih.org',
+    'https://smeehive.zabravih.org',
 ]
 
 REST_FRAMEWORK = {
