@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HiveList from "./HiveList";
-import HoneycombBackground from "./HoneycombBackground";
+import UserMenu from "@/app/components/UserMenu";
 import { fetchHives, type Hive } from "@/lib/django";
 
 export default async function HivesPage() {
@@ -14,9 +14,8 @@ export default async function HivesPage() {
   }
 
   return (
-    <div className="relative min-h-screen" style={{ background: "#fef3c7" }}>
-      <HoneycombBackground />
-      <div className="relative z-10 flex flex-col items-center py-10 px-4">
+    <div className="relative min-h-screen">
+      <div className="flex flex-col items-center py-10 px-4">
         <div
           className="w-full max-w-5xl rounded-3xl px-8 py-10 flex flex-col items-center"
           style={{
@@ -36,13 +35,14 @@ export default async function HivesPage() {
             >
               SmeeHive
             </h1>
-            <div className="flex justify-center sm:justify-end">
+            <div className="flex justify-center sm:justify-end gap-2 flex-wrap">
               <Link
                 href="/hives/register"
-                className="text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-xl text-amber-800 border-2 border-amber-300 bg-amber-50 hover:bg-amber-100 hover:border-amber-400 transition-all"
+                className="text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-xl text-amber-800 border-2 border-amber-300 bg-amber-50/70 hover:bg-amber-100 hover:border-amber-400 transition-all"
               >
                 Register New Hive
               </Link>
+              <UserMenu />
             </div>
           </div>
           <p className="text-gray-700/70 text-sm tracking-widest uppercase mb-10">

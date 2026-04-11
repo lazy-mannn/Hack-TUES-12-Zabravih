@@ -12,7 +12,10 @@ const PUBLIC_PATHS = [
   '/auth/provider-signup',
 ]
 
+const STATIC_EXT = /\.(svg|png|jpg|jpeg|gif|ico|webp|woff2?|ttf|otf|css|js|map)$/i
+
 function isPublic(pathname: string) {
+  if (STATIC_EXT.test(pathname)) return true
   return PUBLIC_PATHS.some(p => pathname === p || pathname.startsWith(p + '/'))
 }
 

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fetchHiveDetail, fetchHiveMetrics } from "@/lib/django";
 import type { AggregatedMeasurement } from "@/lib/django";
-import HoneycombBackground from "../HoneycombBackground";
 import GaugeCircle from "./GaugeCircle";
 import MetricGraph from "./MetricGraph";
 
@@ -29,10 +28,8 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
   }
 
   return (
-    <div className="relative min-h-screen" style={{ background: "#fef3c7" }}>
-      <HoneycombBackground />
-
-      <div className="relative z-10 px-6 py-10 max-w-4xl mx-auto">
+    <div className="min-h-screen">
+      <div className="px-6 py-10 max-w-4xl mx-auto">
         {/* Liquid glass card */}
         <div
           className="rounded-3xl px-8 py-8 flex flex-col gap-8"
@@ -48,7 +45,7 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
           {/* Back link */}
           <Link
             href="/hives"
-            className="text-amber-900/60 text-sm tracking-widest uppercase hover:text-amber-900 transition-colors font-medium self-start"
+            className="self-start text-amber-900/60 text-sm tracking-widest uppercase hover:text-amber-900 transition-colors font-medium"
           >
             ← Back
           </Link>

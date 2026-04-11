@@ -1,0 +1,15 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}{% autoescape off %}{% user_display user as user_display %}Hi {{ user_display }},
+
+{% blocktranslate with site_name=current_site.name %}Thanks for signing up for {{ site_name }}! Please confirm your email address below.{% endblocktranslate %}
+
+{% if code %}{% blocktranslate %}Your email verification code is:{% endblocktranslate %}
+
+{{ code }}{% else %}{% blocktranslate %}Click the link below to confirm your email address:{% endblocktranslate %}
+
+{{ activate_url }}{% endif %}
+
+{% blocktranslate %}This link expires in 3 days. If you did not sign up, you can safely ignore this email.{% endblocktranslate %}{% endautoescape %}{% endblock content %}

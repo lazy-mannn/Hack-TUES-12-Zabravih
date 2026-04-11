@@ -5,7 +5,9 @@ import { useRouter, useParams } from 'next/navigation'
 import * as allauth from '@/lib/allauth'
 
 export default function ResetPasswordPage() {
-  const { key } = useParams<{ key: string }>()
+  const params = useParams<{ key: string }>()
+  // useParams may return percent-encoded segments; decode so signing.loads() can split on ':'
+  const key = decodeURIComponent(params.key)
   const router = useRouter()
 
   const [keyValid, setKeyValid] = useState<boolean | null>(null)
@@ -15,6 +17,7 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    // Key is passed via X-Password-Reset-Key header (not query param)
     allauth.getPasswordReset(key).then(res => {
       setKeyValid(res.status === 200)
     })
@@ -30,11 +33,12 @@ export default function ResetPasswordPage() {
     }
 
     setLoading(true)
-    const res = await allauth.resetPassword(key, password1, password2)
+    // Only send key + password — no password2 in the API
+    const res = await allauth.resetPassword(key, password1)
     setLoading(false)
 
-    if (res.status === 200) {
-      router.push('/auth/login?reset=1')
+    if (res.status === 200 || res.status === 401) {
+      router.push('/auth/login')
     } else {
       setErrors(res.errors ?? [{ message: 'Reset failed. The link may have expired.' }])
     }
@@ -45,9 +49,17 @@ export default function ResetPasswordPage() {
 
   const globalErrors = errors.filter(e => !e.param)
 
+  const cardStyle: React.CSSProperties = {
+    background: 'rgba(255, 255, 255, 0.55)',
+    backdropFilter: 'blur(14px)',
+    WebkitBackdropFilter: 'blur(14px)',
+    border: '1px solid rgba(255, 255, 255, 0.75)',
+    boxShadow: 'inset 0 2px 0 rgba(255,255,255,0.90), 0 24px 48px rgba(0,0,0,0.08)',
+  }
+
   if (keyValid === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-amber-50">
+      <div className="min-h-screen flex items-center justify-center">
         <p className="text-gray-500">Validating link…</p>
       </div>
     )
@@ -55,8 +67,8 @@ export default function ResetPasswordPage() {
 
   if (!keyValid) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-amber-50">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center space-y-4">
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="w-full max-w-md rounded-2xl p-8 text-center space-y-4" style={cardStyle}>
           <div className="text-5xl">⚠️</div>
           <h1 className="text-xl font-bold text-amber-900">Link invalid or expired</h1>
           <a href="/auth/reset-password" className="text-sm text-amber-700 hover:underline">Request a new one</a>
@@ -66,8 +78,8 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-amber-50">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl p-8 space-y-6" style={cardStyle}>
         <h1 className="text-2xl font-bold text-amber-900">Set new password</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,7 +94,7 @@ export default function ResetPasswordPage() {
               value={password1}
               onChange={e => setPassword1(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80"
             />
             {fieldError('password') && <p className="text-xs text-red-600 mt-1">{fieldError('password')}</p>}
           </div>
@@ -94,7 +106,7 @@ export default function ResetPasswordPage() {
               value={password2}
               onChange={e => setPassword2(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80"
             />
             {fieldError('password2') && <p className="text-xs text-red-600 mt-1">{fieldError('password2')}</p>}
           </div>

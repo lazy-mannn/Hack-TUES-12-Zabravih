@@ -1,0 +1,43 @@
+{% extends "account/email/base_message.html" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}
+{% autoescape off %}
+{% user_display user as user_display %}
+<h2 style="margin:0 0 8px;font-size:26px;font-weight:800;color:#1C1917;letter-spacing:-0.01em;">Confirm your email ✉️</h2>
+<p style="margin:0 0 28px;font-size:14px;color:#78716C;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;">New email address added</p>
+
+<p style="margin:0 0 28px;font-size:15px;color:#57534E;line-height:1.7;">
+  Hi {{ user_display }},<br><br>
+  {% blocktranslate with site_name=current_site.name site_domain=current_site.domain %}You're receiving this email because user {{ user_display }} has added this email address to their {{ site_name }} account. Please confirm it below.{% endblocktranslate %}
+</p>
+
+{% if code %}
+<p style="margin:0 0 12px;font-size:14px;color:#78716C;">Enter this code in your browser window:</p>
+<div style="background:#FEF3C7;border:2px solid #FCD34D;border-radius:14px;padding:20px;text-align:center;margin:0 0 28px;letter-spacing:0.22em;font-size:28px;font-weight:800;color:#92400E;font-family:monospace;">
+  {{ code }}
+</div>
+{% else %}
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:0 0 28px;">
+  <tr>
+    <td align="center">
+      <a href="{{ activate_url }}"
+         style="display:inline-block;background:#D97706;color:#FFFFFF;font-size:15px;font-weight:700;text-decoration:none;border-radius:12px;padding:14px 36px;letter-spacing:0.04em;">
+        Confirm email address
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin:0 0 8px;font-size:12px;color:#A8956B;text-align:center;">Or copy and paste this link into your browser:</p>
+<p style="margin:0;font-size:11px;color:#B45309;word-break:break-all;text-align:center;font-family:monospace;background:#FEF9EE;border-radius:8px;padding:10px;">
+  {{ activate_url }}
+</p>
+{% endif %}
+
+<p style="margin:28px 0 0;font-size:13px;color:#A8956B;border-top:1px solid #FEF3C7;padding-top:20px;line-height:1.6;">
+  If you did not add this email address to your SmeeHive account, you can safely ignore this message.
+</p>
+{% endautoescape %}
+{% endblock content %}

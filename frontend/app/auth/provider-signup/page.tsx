@@ -36,8 +36,8 @@ export default function ProviderSignupPage() {
     errors.find(e => e.param === param)?.message
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-amber-50">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md rounded-2xl p-8 space-y-6" style={{ background: "rgba(255,255,255,0.55)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.75)", boxShadow: "inset 0 2px 0 rgba(255,255,255,0.90), 0 24px 48px rgba(0,0,0,0.08)" }}>
         <h1 className="text-2xl font-bold text-amber-900">One more step</h1>
         <p className="text-gray-600 text-sm">
           Please provide an email address to complete your account.
@@ -55,7 +55,7 @@ export default function ProviderSignupPage() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white/80 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
             {fieldError('email') && <p className="text-xs text-red-600 mt-1">{fieldError('email')}</p>}
           </div>

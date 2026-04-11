@@ -8,12 +8,13 @@ const DJANGO_URL = process.env.DJANGO_URL!
 
 async function authHeaders(): Promise<Record<string, string>> {
   const store = await cookies()
-  const cookieHeader = store.getAll()
-    .map(c => `${c.name}=${c.value}`)
-    .join('; ')
+  const all = store.getAll()
+  const cookieHeader = all.map(c => `${c.name}=${c.value}`).join('; ')
+  const csrfToken = all.find(c => c.name === 'csrftoken')?.value ?? ''
   return {
     'Content-Type': 'application/json',
     'Cookie': cookieHeader,
+    'X-CSRFToken': csrfToken,
   }
 }
 
@@ -92,7 +93,10 @@ export async function postRegisterHive(data: {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     const msg = Object.entries(body)
-      .map(([k, v]) => `${k}: ${(v as string[]).join(', ')}`)
+      .map(([k, v]) => {
+        const val = Array.isArray(v) ? v.join(', ') : String(v)
+        return `${k}: ${val}`
+      })
       .join(' | ')
     throw new Error(msg || `Server returned ${res.status}`)
   }

@@ -2,7 +2,6 @@
 
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import HoneycombBackground from "../HoneycombBackground";
 import { registerHive, type RegisterState } from "@/app/actions";
 
 export default function RegisterPage() {
@@ -16,9 +15,7 @@ export default function RegisterPage() {
     "w-full bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-400 rounded-lg px-5 py-3 outline-none focus:border-amber-400 transition-colors text-base";
 
   return (
-    <div className="relative min-h-screen" style={{ background: "#fef3c7" }}>
-      <HoneycombBackground />
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-10">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
         <div
           className="w-full max-w-md rounded-3xl px-8 py-10"
           style={{
@@ -87,7 +84,6 @@ export default function RegisterPage() {
             </button>
           </form>
         </div>
-      </div>
     </div>
   );
 }

@@ -1,0 +1,44 @@
+{% extends "account/email/base_message.html" %}
+{% load i18n %}
+
+{% block content %}
+<p style="margin:0 0 20px;font-size:15px;color:#57534E;line-height:1.7;">
+  {% blocktrans %}The following change was made to your account:{% endblocktrans %}
+</p>
+
+<div style="background:#FEF9EE;border-left:4px solid #D97706;border-radius:0 10px 10px 0;padding:16px 20px;margin:0 0 24px;">
+  <p style="margin:0;font-size:15px;font-weight:600;color:#92400E;">
+    {% block notification_message %}{% endblock notification_message %}
+  </p>
+</div>
+
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#FEF3C7;border-radius:10px;padding:16px;margin:0 0 8px;">
+  <tr>
+    <td style="font-size:12px;color:#92400E;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding-bottom:8px;">
+      {% blocktrans %}Security details{% endblocktrans %}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td style="font-size:12px;color:#78716C;padding:2px 16px 2px 0;white-space:nowrap;">IP address</td>
+          <td style="font-size:12px;color:#1C1917;font-family:monospace;">{{ ip }}</td>
+        </tr>
+        <tr>
+          <td style="font-size:12px;color:#78716C;padding:2px 16px 2px 0;white-space:nowrap;">Browser</td>
+          <td style="font-size:12px;color:#1C1917;">{{ user_agent }}</td>
+        </tr>
+        <tr>
+          <td style="font-size:12px;color:#78716C;padding:2px 16px 2px 0;white-space:nowrap;">Date</td>
+          <td style="font-size:12px;color:#1C1917;">{{ timestamp }}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin:16px 0 0;font-size:13px;color:#A8956B;line-height:1.6;">
+  {% blocktrans %}If you do not recognise this change please secure your account immediately.{% endblocktrans %}
+</p>
+{% endblock content %}

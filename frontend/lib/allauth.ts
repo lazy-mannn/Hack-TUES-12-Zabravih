@@ -25,6 +25,19 @@ export interface AllauthUser {
   id: number
   email: string
   display: string
+  has_usable_password?: boolean
+}
+
+export interface EmailAddress {
+  email: string
+  primary: boolean
+  verified: boolean
+}
+
+export interface ProviderAccount {
+  uid: string
+  display: string
+  provider: { id: string; name: string }
 }
 
 export interface AllauthResponse {
@@ -65,11 +78,13 @@ async function request(
   method: string,
   path: string,
   body?: Record<string, unknown>,
+  extraHeaders?: Record<string, string>,
 ): Promise<AllauthResponse> {
   const headers: Record<string, string> = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'X-CSRFToken': getCsrfToken(),
+    ...extraHeaders,
   }
 
   const res = await fetch(`${BASE}${path}`, {
@@ -105,12 +120,14 @@ export function logout(): Promise<AllauthResponse> {
 
 // ── Email verification ─────────────────────────────────────────────────────────
 
-export function verifyEmail(key: string): Promise<AllauthResponse> {
-  return request('POST', '/auth/email/verify', { key })
+/** Validates a verification link key. Key is passed as a custom header. */
+export function getEmailVerification(key: string): Promise<AllauthResponse> {
+  return request('GET', '/auth/email/verify', undefined, { 'X-Email-Verification-Key': key })
 }
 
-export function getEmailVerification(key: string): Promise<AllauthResponse> {
-  return request('GET', `/auth/email/verify?key=${encodeURIComponent(key)}`)
+/** Confirms email verification. Key is sent in the POST body. */
+export function verifyEmail(key: string): Promise<AllauthResponse> {
+  return request('POST', '/auth/email/verify', { key })
 }
 
 // ── Password reset ─────────────────────────────────────────────────────────────
@@ -119,28 +136,58 @@ export function requestPasswordReset(email: string): Promise<AllauthResponse> {
   return request('POST', '/auth/password/request', { email })
 }
 
+/** Validates a password reset link key. Key is passed as a custom header. */
 export function getPasswordReset(key: string): Promise<AllauthResponse> {
-  return request('GET', `/auth/password/reset?key=${encodeURIComponent(key)}`)
+  return request('GET', '/auth/password/reset', undefined, { 'X-Password-Reset-Key': key })
 }
 
-export function resetPassword(key: string, password1: string, password2: string): Promise<AllauthResponse> {
-  return request('POST', '/auth/password/reset', { key, password: password1, password2 })
+/** Resets the password. Only `key` and `password` are sent — no password2. */
+export function resetPassword(key: string, password: string): Promise<AllauthResponse> {
+  return request('POST', '/auth/password/reset', { key, password })
+}
+
+// ── Account: password ──────────────────────────────────────────────────────────
+
+export function changePassword(currentPassword: string, newPassword: string): Promise<AllauthResponse> {
+  return request('POST', '/account/password/change', {
+    current_password: currentPassword,
+    new_password: newPassword,
+  })
+}
+
+// ── Account: email addresses ───────────────────────────────────────────────────
+
+export function getEmailAddresses(): Promise<AllauthResponse> {
+  return request('GET', '/account/email')
+}
+
+export function addEmail(email: string): Promise<AllauthResponse> {
+  return request('POST', '/account/email', { email })
+}
+
+export function deleteEmail(email: string): Promise<AllauthResponse> {
+  return request('DELETE', '/account/email', { email })
+}
+
+export function markEmailAsPrimary(email: string): Promise<AllauthResponse> {
+  return request('PATCH', '/account/email', { email, primary: true })
+}
+
+export function requestEmailVerification(email: string): Promise<AllauthResponse> {
+  return request('PUT', '/account/email', { email })
 }
 
 // ── Social accounts (OAuth) ────────────────────────────────────────────────────
 
-/**
- * Redirects the browser to the Google OAuth consent screen.
- * Uses a form POST so the CSRF token is included automatically.
- */
-export function redirectToGoogle(callbackUrl: string): void {
+/** Submit a hidden form POST to initiate an OAuth provider flow. */
+function providerRedirect(process: 'login' | 'connect', callbackUrl: string): void {
   const form = document.createElement('form')
   form.method = 'POST'
   form.action = `${BASE}/auth/provider/redirect`
 
   const fields: Record<string, string> = {
     provider: 'google',
-    process: 'login',
+    process,
     callback_url: callbackUrl,
     csrfmiddlewaretoken: getCsrfToken(),
   }
@@ -157,18 +204,33 @@ export function redirectToGoogle(callbackUrl: string): void {
   form.submit()
 }
 
+/**
+ * Redirects the browser to the Google OAuth consent screen (login/signup flow).
+ * Uses a form POST so the CSRF token is included automatically.
+ */
+export function redirectToGoogle(callbackUrl: string): void {
+  providerRedirect('login', callbackUrl)
+}
+
+/**
+ * Redirects to Google OAuth to connect an account to the currently signed-in user.
+ */
+export function connectToGoogle(callbackUrl: string): void {
+  providerRedirect('connect', callbackUrl)
+}
+
 /** Complete OAuth signup when the provider did not supply an email. */
 export function providerSignup(email: string): Promise<AllauthResponse> {
   return request('POST', '/auth/provider/signup', { email })
 }
 
 /** List connected social accounts. */
-export function getConnectedAccounts(): Promise<AllauthResponse> {
+export function getProviderAccounts(): Promise<AllauthResponse> {
   return request('GET', '/account/providers')
 }
 
 /** Disconnect a social account. */
-export function disconnectAccount(providerId: string, accountUid: string): Promise<AllauthResponse> {
+export function disconnectProviderAccount(providerId: string, accountUid: string): Promise<AllauthResponse> {
   return request('DELETE', '/account/providers', { provider: providerId, account: accountUid })
 }
 
