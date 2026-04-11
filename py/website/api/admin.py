@@ -1,15 +1,25 @@
 from django.contrib import admin
 
-from .models import Hive, HiveMeasurement
+from .models import Device, Hive, HiveMeasurement
+
+
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
+    list_display = ("macaddress", "status", "created_at")
+    search_fields = ("macaddress",)
+    list_filter = ("status",)
+    ordering = ("-created_at",)
+    readonly_fields = ("created_at",)
 
 
 @admin.register(Hive)
 class HiveAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "macaddress", "location", "exists_since", "measurement_count")
-    search_fields = ("name", "macaddress", "location")
+    list_display = ("id", "name", "owner", "macaddress", "location", "exists_since", "measurement_count")
+    search_fields = ("name", "macaddress", "location", "owner__email")
     list_filter = ("exists_since",)
     ordering = ("id",)
     readonly_fields = ("exists_since",)
+    autocomplete_fields = ("owner",)
 
     def measurement_count(self, obj):
         return obj.measurements.count()

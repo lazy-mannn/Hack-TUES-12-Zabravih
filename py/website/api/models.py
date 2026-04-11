@@ -1,7 +1,40 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class Device(models.Model):
+    """
+    Inventory of physical ESP32 devices. Admin creates an entry when a device is
+    built. Status flips to 'registered' when a user claims it by registering a Hive.
+    """
+    STATUS_CREATED = 'created'
+    STATUS_REGISTERED = 'registered'
+    STATUS_CHOICES = [
+        (STATUS_CREATED, 'Created'),
+        (STATUS_REGISTERED, 'Registered'),
+    ]
+
+    macaddress = models.CharField(max_length=17, unique=True)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=STATUS_CREATED)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.macaddress = self.macaddress.lower()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.macaddress} ({self.status})"
+
 
 class Hive(models.Model):
-    macaddress = models.CharField(max_length=17, unique=True, default='')
+    """
+    A user's beehive. Each hive is owned by one user and linked to one physical
+    device (ESP32) via its MAC address. The device sends measurements to this hive.
+    """
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hives')
+    macaddress = models.CharField(max_length=17, unique=True)
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     exists_since = models.DateField(auto_now_add=True, auto_now=False)

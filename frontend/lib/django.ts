@@ -1,13 +1,19 @@
 // Server-only module — never imported from client components.
-// All calls go from the Next.js server to Django at localhost.
+// All calls go from the Next.js server to Django at localhost,
+// forwarding the browser's sessionid cookie so Django can authenticate the user.
+
+import { cookies } from 'next/headers'
 
 const DJANGO_URL = process.env.DJANGO_URL!
-const DJANGO_API_KEY = process.env.DJANGO_API_KEY!
 
-function headers() {
+async function authHeaders(): Promise<Record<string, string>> {
+  const store = await cookies()
+  const cookieHeader = store.getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ')
   return {
     'Content-Type': 'application/json',
-    'X-Api-Key': DJANGO_API_KEY,
+    'Cookie': cookieHeader,
   }
 }
 
@@ -45,7 +51,7 @@ export type HiveMetrics = {
 
 export async function fetchHives(): Promise<Hive[]> {
   const res = await fetch(`${DJANGO_URL}/api/`, {
-    headers: headers(),
+    headers: await authHeaders(),
     cache: 'no-store',
   })
   if (!res.ok) throw new Error(`Django /api/ returned ${res.status}`)
@@ -54,7 +60,7 @@ export async function fetchHives(): Promise<Hive[]> {
 
 export async function fetchHiveDetail(id: number): Promise<HiveDetail> {
   const res = await fetch(`${DJANGO_URL}/api/${id}/`, {
-    headers: headers(),
+    headers: await authHeaders(),
     cache: 'no-store',
   })
   if (!res.ok) throw new Error(`Django /api/${id}/ returned ${res.status}`)
@@ -66,7 +72,7 @@ export async function fetchHiveMetrics(
   period: '24h' | '7d' | '14d',
 ): Promise<HiveMetrics> {
   const res = await fetch(`${DJANGO_URL}/api/${id}/?displayed_time=${period}`, {
-    headers: headers(),
+    headers: await authHeaders(),
     cache: 'no-store',
   })
   if (!res.ok) throw new Error(`Django /api/${id}/?displayed_time=${period} returned ${res.status}`)
@@ -80,7 +86,7 @@ export async function postRegisterHive(data: {
 }): Promise<void> {
   const res = await fetch(`${DJANGO_URL}/api/register/`, {
     method: 'POST',
-    headers: headers(),
+    headers: await authHeaders(),
     body: JSON.stringify(data),
   })
   if (!res.ok) {

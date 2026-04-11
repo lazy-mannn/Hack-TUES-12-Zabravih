@@ -1,14 +1,13 @@
 from .serializers import *
-from .authentication import require_api_key
+from .models import Device
 
-from django.http import HttpResponse
 from django.db.models import Q
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view, parser_classes
+from rest_framework.decorators import api_view, parser_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.parsers import MultiPartParser
 
 from datetime import timedelta, datetime
@@ -90,18 +89,18 @@ def run_inference(hive_id: int) -> str:
         return 'SNE'
 
 
-@require_api_key
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def hive_list(request):
-    hives = Hive.objects.exclude(name='server')
+    hives = Hive.objects.filter(owner=request.user)
     serializer = HiveListSerializer(hives, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-@require_api_key
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def hive_detail(request, pk):
     try:
-        hive = Hive.objects.get(pk=pk)
+        hive = Hive.objects.get(pk=pk, owner=request.user)
     except Hive.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -192,13 +191,24 @@ def hive_detail(request, pk):
     serializer = HiveDetailSerializer(hive)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-@require_api_key
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def register_hive(request):
-    serializer = HiveRegisterSerializer(data=request.data)
+    mac = request.data.get('macaddress', '').lower()
+
+    device = Device.objects.filter(macaddress=mac, status=Device.STATUS_CREATED).first()
+    if not device:
+        return Response(
+            {'macaddress': ['This device is not recognised or has already been registered.']},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    serializer = HiveRegisterSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        hive = serializer.save(owner=request.user)
+        device.status = Device.STATUS_REGISTERED
+        device.save()
+        return Response(HiveRegisterSerializer(hive).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -211,6 +221,7 @@ def _to_float(value, default=0.0):
 
 @api_view(['POST'])
 @parser_classes([MultiPartParser])
+@permission_classes([AllowAny])
 def get_measurement(request):
     logger.info('--- incoming measurement request ---')
     logger.info('Headers: %s', dict(request.headers))

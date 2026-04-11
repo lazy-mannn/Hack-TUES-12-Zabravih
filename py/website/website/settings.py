@@ -53,8 +53,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.headless',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # third-party
     'rest_framework',
     'corsheaders',
+    # local
     'api',
 ]
 
@@ -67,6 +76,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -74,10 +91,53 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+# ── allauth ────────────────────────────────────────────────────────────────────
+
+HEADLESS_ONLY = True
+
+HEADLESS_FRONTEND_URLS = {
+    'account_confirm_email':           '/auth/verify-email/{key}',
+    'account_reset_password':          '/auth/reset-password',
+    'account_reset_password_from_key': '/auth/reset-password/{key}',
+    'account_signup':                  '/auth/signup',
+    'socialaccount_login_error':       '/auth/callback',
+}
+
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = False
+ACCOUNT_LOGIN_BY_CODE_ENABLED = False
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+
+# Google OAuth credentials are managed via Django admin (Social Applications).
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# ── email (AWS SES via SMTP) ───────────────────────────────────────────────────
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'email-smtp.eu-central-1.amazonaws.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'no-reply@smeehive.zabravih.org'
 
 ROOT_URLCONF = 'website.urls'
 

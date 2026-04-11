@@ -21,5 +21,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # allauth: traditional routes (needed for OAuth redirect/callback flow)
+    path("accounts/", include("allauth.urls")),
+    # allauth: headless REST API (browser client at /_allauth/browser/v1/)
+    path("_allauth/", include("allauth.headless.urls")),
     path("api/", include("api.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
