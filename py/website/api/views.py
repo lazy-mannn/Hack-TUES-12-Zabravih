@@ -174,6 +174,21 @@ def hive_detail(request, pk):
     serializer = HiveDetailSerializer(hive)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def edit_hive(request, pk):
+    try:
+        hive = Hive.objects.get(pk=pk, owner=request.user)
+    except Hive.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = HiveEditSerializer(hive, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def register_hive(request):

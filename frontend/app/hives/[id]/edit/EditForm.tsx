@@ -2,17 +2,26 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerHive, type RegisterState } from "@/app/actions";
+import { updateHive, type EditState } from "@/app/actions";
 import HiveMapPicker, { type PickedLocation } from "@/app/components/HiveMapPicker";
+import type { HiveDetail } from "@/lib/django";
 
-export default function RegisterPage() {
+type Props = { hive: HiveDetail };
+
+export default function EditForm({ hive }: Props) {
   const router = useRouter();
-  const [state, action, pending] = useActionState<RegisterState, FormData>(
-    registerHive,
-    null
+
+  const initialLocation: PickedLocation | undefined =
+    hive.latitude && hive.longitude
+      ? { lat: parseFloat(hive.latitude), lng: parseFloat(hive.longitude), address: hive.address }
+      : undefined;
+
+  const [pickedLocation, setPickedLocation] = useState<PickedLocation | null>(
+    initialLocation ?? null,
   );
 
-  const [pickedLocation, setPickedLocation] = useState<PickedLocation | null>(null);
+  const boundAction = updateHive.bind(null, hive.id);
+  const [state, action, pending] = useActionState<EditState, FormData>(boundAction, null);
 
   const inputClass =
     "w-full bg-white border-2 border-gray-200 text-gray-900 placeholder-gray-400 rounded-lg px-5 py-3 outline-none focus:border-amber-400 transition-colors text-base";
@@ -31,7 +40,7 @@ export default function RegisterPage() {
         }}
       >
         <button
-          onClick={() => router.push("/hives")}
+          onClick={() => router.push(`/hives/${hive.id}`)}
           className="text-gray-400 text-sm tracking-widest uppercase mb-6 hover:text-gray-700 transition-colors flex items-center gap-2"
         >
           ← Back
@@ -41,54 +50,45 @@ export default function RegisterPage() {
           className="text-3xl font-black tracking-widest uppercase text-gray-900 mb-1"
           style={{ textShadow: "0 1px 8px rgba(0,0,0,0.1)" }}
         >
-          Register Hive
+          Edit Hive
         </h1>
         <p className="text-gray-700/70 text-sm tracking-widest uppercase mb-8">
-          Add a new device
+          {hive.name}
         </p>
 
         <form action={action} className="flex flex-col gap-5">
-          {/* Hive name */}
           <input
             type="text"
             name="name"
-            placeholder="Hive name (e.g. Back Garden)"
+            placeholder="Hive name"
+            defaultValue={hive.name}
             required
             className={inputClass}
           />
 
-          {/* Location nickname */}
           <input
             type="text"
             name="location"
-            placeholder="Location nickname (e.g. Old Oak)"
+            placeholder="Location nickname"
+            defaultValue={hive.location}
             required
             className={inputClass}
           />
 
-          {/* MAC address */}
-          <input
-            type="text"
-            name="macaddress"
-            placeholder="MAC Address (AA:BB:CC:DD:EE:FF)"
-            required
-            pattern="^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$"
-            title="Format: AA:BB:CC:DD:EE:FF"
-            className={inputClass}
-          />
-
-          {/* Map location picker */}
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold tracking-widest uppercase text-gray-500">
               Pin Location on Map
             </span>
-            <HiveMapPicker onLocationChange={setPickedLocation} />
+            <HiveMapPicker
+              onLocationChange={setPickedLocation}
+              initialLocation={initialLocation}
+            />
           </div>
 
-          {/* Hidden fields populated by map picker */}
-          <input type="hidden" name="address" value={pickedLocation?.address ?? ""} />
-          <input type="hidden" name="latitude" value={pickedLocation?.lat?.toString() ?? ""} />
-          <input type="hidden" name="longitude" value={pickedLocation?.lng?.toString() ?? ""} />
+          {/* Coords — use newly picked value, fall back to existing hive values */}
+          <input type="hidden" name="address"   value={pickedLocation?.address   ?? hive.address   ?? ""} />
+          <input type="hidden" name="latitude"  value={pickedLocation?.lat?.toString()  ?? hive.latitude  ?? ""} />
+          <input type="hidden" name="longitude" value={pickedLocation?.lng?.toString() ?? hive.longitude ?? ""} />
 
           {state?.error && (
             <div className="rounded-xl bg-red-500/15 border border-red-600/30 px-4 py-3 text-sm text-gray-900 text-center tracking-wide font-mono">
@@ -101,7 +101,7 @@ export default function RegisterPage() {
             disabled={pending}
             className="mt-2 w-full py-3 rounded-xl font-semibold tracking-widest uppercase text-amber-900 text-base cursor-pointer border-2 border-amber-400 bg-amber-100 hover:bg-amber-200 hover:border-amber-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {pending ? "Registering…" : "Register"}
+            {pending ? "Saving…" : "Save Changes"}
           </button>
         </form>
       </div>

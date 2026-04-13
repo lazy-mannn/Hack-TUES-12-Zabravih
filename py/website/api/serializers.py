@@ -4,21 +4,26 @@ from .models import Hive, HiveMeasurement
 class HiveRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hive
-        fields = ['id', 'macaddress', 'name', 'location']
+        fields = ['id', 'macaddress', 'name', 'location', 'address', 'latitude', 'longitude']
         # owner is injected by the view via save(owner=request.user)
 
 class HiveListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hive
-        fields = ['id', 'name', 'location']
+        fields = ['id', 'name', 'location', 'address', 'latitude', 'longitude']
 
 class HiveDetailSerializer(serializers.ModelSerializer):
     measurements = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Hive
-        fields = ['id', 'name', 'location', 'exists_since', 'measurements']
+        fields = ['id', 'name', 'location', 'address', 'latitude', 'longitude', 'exists_since', 'measurements']
 
+
+class HiveEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hive
+        fields = ['id', 'name', 'location', 'address', 'latitude', 'longitude']
 
 class HiveMeasurementSerializer(serializers.ModelSerializer):
     class Meta:

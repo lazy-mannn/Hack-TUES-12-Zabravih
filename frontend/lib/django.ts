@@ -21,13 +21,19 @@ async function authHeaders(): Promise<Record<string, string>> {
 export type Hive = {
   id: number
   name: string
-  location: string
+  location: string       // user-given nickname
+  address: string        // geocoded address
+  latitude: string | null
+  longitude: string | null
 }
 
 export type HiveDetail = {
   id: number
   name: string
   location: string
+  address: string
+  latitude: string | null
+  longitude: string | null
   exists_since: string
   measurements: string[]
 }
@@ -84,9 +90,36 @@ export async function postRegisterHive(data: {
   name: string
   location: string
   macaddress: string
+  address?: string
+  latitude?: string
+  longitude?: string
 }): Promise<void> {
   const res = await fetch(`${DJANGO_URL}/api/register/`, {
     method: 'POST',
+    headers: await authHeaders(),
+    body: JSON.stringify(data),
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    const msg = Object.entries(body)
+      .map(([k, v]) => {
+        const val = Array.isArray(v) ? v.join(', ') : String(v)
+        return `${k}: ${val}`
+      })
+      .join(' | ')
+    throw new Error(msg || `Server returned ${res.status}`)
+  }
+}
+
+export async function patchHive(id: number, data: {
+  name?: string
+  location?: string
+  address?: string
+  latitude?: string | null
+  longitude?: string | null
+}): Promise<void> {
+  const res = await fetch(`${DJANGO_URL}/api/${id}/edit/`, {
+    method: 'PATCH',
     headers: await authHeaders(),
     body: JSON.stringify(data),
   })

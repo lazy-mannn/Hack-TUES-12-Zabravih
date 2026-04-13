@@ -1,16 +1,32 @@
 import Link from "next/link";
 import HiveList from "./HiveList";
 import UserMenu from "@/app/components/UserMenu";
-import { fetchHives, type Hive } from "@/lib/django";
+import { fetchHives, fetchHiveMetrics, type Hive, type AggregatedMeasurement } from "@/lib/django";
 
 export default async function HivesPage() {
   let hives: Hive[] = [];
   let fetchError: string | null = null;
+  let latestMetrics: Record<number, AggregatedMeasurement | null> = {};
 
   try {
     hives = await fetchHives();
   } catch (e) {
     fetchError = e instanceof Error ? e.message : "Failed to load hives";
+  }
+
+  if (hives.length > 0) {
+    const results = await Promise.allSettled(
+      hives.map((h) => fetchHiveMetrics(h.id, "24h"))
+    );
+    results.forEach((result, i) => {
+      const hiveId = hives[i].id;
+      if (result.status === "fulfilled") {
+        const buckets = result.value.aggregated_measurements;
+        latestMetrics[hiveId] = buckets.length ? buckets[buckets.length - 1] : null;
+      } else {
+        latestMetrics[hiveId] = null;
+      }
+    });
   }
 
   return (
@@ -48,7 +64,11 @@ export default async function HivesPage() {
           <p className="text-gray-700/70 text-sm tracking-widest uppercase mb-10">
             Select a hive to inspect
           </p>
-          <HiveList initialHives={hives} fetchError={fetchError} />
+          <HiveList
+            initialHives={hives}
+            fetchError={fetchError}
+            latestMetrics={latestMetrics}
+          />
         </div>
       </div>
     </div>

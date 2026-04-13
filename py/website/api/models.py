@@ -37,7 +37,10 @@ class Hive(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hives')
     macaddress = models.CharField(max_length=17, unique=True)
     name = models.CharField(max_length=100)
-    location = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)  # user-given nickname
+    address = models.CharField(max_length=300, blank=True, default='')  # geocoded address
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     exists_since = models.DateField(auto_now_add=True, auto_now=False)
 
     def save(self, *args, **kwargs):

@@ -4,6 +4,7 @@ import { fetchHiveDetail, fetchHiveMetrics } from "@/lib/django";
 import type { AggregatedMeasurement } from "@/lib/django";
 import GaugeCircle from "./GaugeCircle";
 import MetricsDashboard from "./MetricsDashboard";
+import HiveLocationMapWrapper from "./HiveLocationMapWrapper";
 
 
 export default async function HivePage(props: PageProps<"/hives/[id]">) {
@@ -42,13 +43,21 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
               "inset 0 2px 0 rgba(255,255,255,0.90), inset 0 -1px 0 rgba(0,0,0,0.04), 0 24px 48px rgba(0,0,0,0.08)",
           }}
         >
-          {/* Back link */}
-          <Link
-            href="/hives"
-            className="self-start text-amber-900/60 text-sm tracking-widest uppercase hover:text-amber-900 transition-colors font-medium"
-          >
-            ← Back
-          </Link>
+          {/* Back + Edit row */}
+          <div className="flex items-center justify-between">
+            <Link
+              href="/hives"
+              className="text-amber-900/60 text-sm tracking-widest uppercase hover:text-amber-900 transition-colors font-medium"
+            >
+              ← Back
+            </Link>
+            <Link
+              href={`/hives/${hive.id}/edit`}
+              className="text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-lg text-amber-800 border-2 border-amber-300 bg-amber-50/70 hover:bg-amber-100 hover:border-amber-400 transition-all"
+            >
+              Edit
+            </Link>
+          </div>
 
           {/* Title */}
           <div>
@@ -61,7 +70,32 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
                 <span className="ml-3 opacity-70">· since {hive.exists_since}</span>
               )}
             </p>
+            {hive.address && (
+              <p className="mt-0.5 text-gray-500 text-xs tracking-wide">📍 {hive.address}</p>
+            )}
+            {hive.latitude && hive.longitude && (
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${hive.latitude},${hive.longitude}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-lg text-blue-700 border border-blue-200 bg-blue-50/70 hover:bg-blue-100 hover:border-blue-300 transition-all"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                Directions
+              </a>
+            )}
           </div>
+
+          {/* Location map */}
+          {hive.latitude && hive.longitude && (
+            <HiveLocationMapWrapper
+              lat={parseFloat(hive.latitude)}
+              lng={parseFloat(hive.longitude)}
+              label={hive.name}
+            />
+          )}
 
           {/* Gauges */}
           <div className="flex justify-center gap-4 sm:gap-10 flex-wrap">
