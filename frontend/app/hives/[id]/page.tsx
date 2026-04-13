@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { fetchHiveDetail, fetchHiveMetrics } from "@/lib/django";
 import type { AggregatedMeasurement } from "@/lib/django";
 import GaugeCircle from "./GaugeCircle";
-import MetricGraph from "./MetricGraph";
+import MetricsDashboard from "./MetricsDashboard";
 
 
 export default async function HivePage(props: PageProps<"/hives/[id]">) {
@@ -92,53 +92,42 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
           </div>
 
           {/* Queen state */}
-          {latest?.dominant_state && (() => {
+          {(() => {
             const STATE_LABELS: Record<string, { label: string; color: string }> = {
-              QPO:  { label: "Queen Present (Original)",         color: "#16a34a" },
-              QPNA: { label: "Queen Present — Newly Accepted",   color: "#ca8a04" },
-              QPR:  { label: "Queen Present — Rejected",        color: "#dc2626" },
-              QNP:  { label: "Queen Not Present",               color: "#dc2626" },
+              QPO:  { label: "Queen Present (Original)",       color: "#16a34a" },
+              QPNA: { label: "Queen Present — Newly Accepted", color: "#ca8a04" },
+              QPR:  { label: "Queen Present — Rejected",      color: "#dc2626" },
+              QNP:  { label: "Queen Not Present",             color: "#dc2626" },
             };
-            const s = STATE_LABELS[latest.dominant_state!];
-            return s ? (
+            const state = latest?.dominant_state;
+            const s = state ? STATE_LABELS[state] : null;
+            if (s) {
+              return (
+                <div className="flex items-center justify-center gap-2">
+                  <span
+                    className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: s.color }}
+                  />
+                  <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: s.color }}>
+                    {s.label}
+                  </span>
+                </div>
+              );
+            }
+            return (
               <div className="flex items-center justify-center gap-2">
-                <span
-                  className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: s.color }}
-                />
-                <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: s.color }}>
-                  {s.label}
+                <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gray-300" />
+                <span className="text-sm font-semibold tracking-widest uppercase text-gray-400">
+                  Queen State Unknown
                 </span>
               </div>
-            ) : null;
+            );
           })()}
 
           <div className="border-t border-black/10" />
 
           {/* Graphs */}
-          <MetricGraph
-            hiveId={hive.id}
-            metric="avg_temperature"
-            label="Temperature"
-            unit="°C"
-            color="#ef4444"
-          />
-          <div className="border-t border-black/10" />
-          <MetricGraph
-            hiveId={hive.id}
-            metric="avg_humidity"
-            label="Humidity"
-            unit="%"
-            color="#3b82f6"
-          />
-          <div className="border-t border-black/10" />
-          <MetricGraph
-            hiveId={hive.id}
-            metric="avg_co2_level"
-            label="CO₂ Level"
-            unit=" ppm"
-            color="#8b5cf6"
-          />
+          <MetricsDashboard hiveId={hive.id} />
         </div>
       </div>
     </div>

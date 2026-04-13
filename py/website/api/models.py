@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -50,21 +51,26 @@ class Hive(models.Model):
 class HiveMeasurement(models.Model):
     hive = models.ForeignKey(Hive, on_delete=models.CASCADE, related_name="measurements")
     battery_level = models.FloatField(help_text="Battery level in percentage", default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default=timezone.now)
     temperature = models.FloatField(help_text="Temperature in Celsius")
     humidity = models.FloatField(help_text="Humidity percentage")
     co2_level = models.FloatField(help_text="CO2 levels in ppm")
-    
+
     STATE_CHOICES = [
         ('QNP', 'QUEEN NOT PRESENT'),
         ('QPNA', 'QUEEN PRESENT NEWLY ACCEPTED'),
         ('QPR', 'QUEEN PRESENT AND REJECTED'),
         ('QPO', 'QUEEEN PRESENT(ORIGINAL)'),
         ('SNE', 'script not executed'),
-        ]
-    
+    ]
+
     state = models.CharField(max_length=4, choices=STATE_CHOICES)
     audio = models.FileField(upload_to='audio/', null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['hive', 'timestamp'], name='hm_hive_ts_idx'),
+        ]
 
     def __str__(self):
         return f"{self.hive.name} - {self.timestamp}"

@@ -1,6 +1,7 @@
 from .serializers import *
 from .models import Device
 
+from django.db import connection
 from django.db.models import Q
 from django.utils import timezone
 
@@ -112,79 +113,61 @@ def hive_detail(request, pk):
         now = timezone.now()
         if displayed_time_period_length == '24h':
             window = timedelta(hours=24)
-            interval = timedelta(minutes=30)
+            interval_seconds = 1800   # 30 min
         elif displayed_time_period_length == '7d':
             window = timedelta(days=7)
-            interval = timedelta(hours=3)
-        elif displayed_time_period_length == '14d':
+            interval_seconds = 10800  # 3 h
+        else:
             window = timedelta(days=14)
-            interval = timedelta(hours=6)
+            interval_seconds = 21600  # 6 h
 
         start_time = now - window
 
-        measurements_qs = HiveMeasurement.objects.filter(
-            hive=hive,
-            timestamp__gte=start_time,
-            timestamp__lte=now,
-        ).order_by('timestamp')
+        # Single SQL round-trip: floor epoch to bucket boundary, then GROUP BY.
+        # mode() picks the most frequent non-SNE state per bucket.
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    to_timestamp(
+                        floor(extract(epoch from timestamp) / %(iv)s) * %(iv)s
+                    ) AT TIME ZONE 'UTC'                        AS bucket_start,
+                    AVG(temperature)                            AS avg_temperature,
+                    AVG(humidity)                               AS avg_humidity,
+                    AVG(co2_level)                              AS avg_co2_level,
+                    AVG(battery_level)                          AS avg_battery_level,
+                    COUNT(*)                                    AS sample_count,
+                    mode() WITHIN GROUP (ORDER BY state)
+                        FILTER (WHERE state <> 'SNE')           AS dominant_state
+                FROM api_hivemeasurement
+                WHERE hive_id = %(hive)s
+                  AND timestamp >= %(start)s
+                  AND timestamp <= %(now)s
+                GROUP BY bucket_start
+                ORDER BY bucket_start
+                """,
+                {'iv': interval_seconds, 'hive': hive.id, 'start': start_time, 'now': now},
+            )
+            rows = cursor.fetchall()
 
-        buckets = {}
-
-        for m in measurements_qs:
-            ts = m.timestamp if m.timestamp.tzinfo else timezone.make_aware(m.timestamp)
-            # bucket index from start_time
-            elapsed = ts - start_time
-            bucket_index = int(elapsed.total_seconds() // interval.total_seconds())
-            bucket_start = start_time + bucket_index * interval
-            key = bucket_start.isoformat()
-
-            if key not in buckets:
-                buckets[key] = {
-                    'start': bucket_start,
-                    'count': 0,
-                    'sum_temperature': 0.0,
-                    'sum_humidity': 0.0,
-                    'sum_co2_level': 0.0,
-                    'sum_battery_level': 0.0,
-                    'state_counts': {},
-                }
-
-            b = buckets[key]
-            b['count'] += 1
-            b['sum_temperature'] += m.temperature
-            b['sum_humidity'] += m.humidity
-            b['sum_co2_level'] += m.co2_level
-            b['sum_battery_level'] += m.battery_level
-            if m.state not in b['state_counts']:
-                b['state_counts'][m.state] = 0
-            b['state_counts'][m.state] += 1
-
-        aggregated = []
-        for key in sorted(buckets.keys()):
-            b = buckets[key]
-            if b['count'] == 0:
-                continue
-            bucket_start = b['start']
-            bucket_end = bucket_start + interval
-            aggregated.append({
-                'bucket_start': bucket_start.isoformat(),
-                'bucket_end': bucket_end.isoformat(),
-                'avg_temperature': b['sum_temperature'] / b['count'],
-                'avg_humidity': b['sum_humidity'] / b['count'],
-                'avg_co2_level': b['sum_co2_level'] / b['count'],
-                'avg_battery_level': b['sum_battery_level'] / b['count'],
-                'sample_count': b['count'],
-                'dominant_state': max(
-                    (s for s in b['state_counts'] if s != 'SNE'),
-                    key=b['state_counts'].get,
-                    default=None,
-                ),
-            })
+        aggregated = [
+            {
+                'bucket_start': row[0].isoformat(),
+                'bucket_end': (row[0] + timedelta(seconds=interval_seconds)).isoformat(),
+                'avg_temperature': row[1],
+                'avg_humidity': row[2],
+                'avg_co2_level': row[3],
+                'avg_battery_level': row[4],
+                'sample_count': row[5],
+                'dominant_state': row[6],
+            }
+            for row in rows
+        ]
 
         return Response({
             'hive_id': hive.id,
             'displayed_time': displayed_time_period_length,
-            'interval_minutes': int(interval.total_seconds() // 60),
+            'interval_minutes': interval_seconds // 60,
             'aggregated_measurements': aggregated,
         }, status=status.HTTP_200_OK)
 
