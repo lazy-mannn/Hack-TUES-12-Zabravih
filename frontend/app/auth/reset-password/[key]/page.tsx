@@ -67,8 +67,8 @@ export default function ResetPasswordPage() {
 
   if (!keyValid) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-md rounded-2xl p-8 text-center space-y-4" style={cardStyle}>
+      <div className="min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-md rounded-2xl p-6 sm:p-8 text-center space-y-4" style={cardStyle}>
           <div className="text-5xl">⚠️</div>
           <h1 className="text-xl font-bold text-amber-900">Link invalid or expired</h1>
           <a href="/auth/reset-password" className="text-sm text-amber-700 hover:underline">Request a new one</a>

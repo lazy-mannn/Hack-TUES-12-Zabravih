@@ -15,9 +15,9 @@ export default async function HivesPage() {
 
   return (
     <div className="relative min-h-screen">
-      <div className="flex flex-col items-center py-10 px-4">
+      <div className="flex flex-col items-center py-6 sm:py-10 px-4">
         <div
-          className="w-full max-w-5xl rounded-3xl px-8 py-10 flex flex-col items-center"
+          className="w-full max-w-5xl rounded-3xl px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-center"
           style={{
             background: "rgba(255, 255, 255, 0.40)",
             backdropFilter: "blur(10px)",
@@ -27,18 +27,18 @@ export default async function HivesPage() {
               "inset 0 2px 0 rgba(255,255,255,0.90), inset 0 -1px 0 rgba(0,0,0,0.04), 0 24px 48px rgba(0,0,0,0.08)",
           }}
         >
-          <div className="w-full grid grid-cols-1 sm:grid-cols-3 items-center gap-3 mb-1">
+          <div className="w-full flex flex-col sm:grid sm:grid-cols-3 items-center gap-3 mb-1">
             <div className="hidden sm:block" />
             <h1
-              className="text-3xl sm:text-5xl font-black tracking-widest uppercase text-gray-900 text-center"
+              className="text-3xl sm:text-5xl font-black tracking-widest uppercase text-gray-900 text-center order-first"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.1)" }}
             >
               SmeeHive
             </h1>
-            <div className="flex justify-center sm:justify-end gap-2 flex-wrap">
+            <div className="flex justify-center sm:justify-end items-center gap-2 flex-wrap">
               <Link
                 href="/hives/register"
-                className="text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-xl text-amber-800 border-2 border-amber-300 bg-amber-50/70 hover:bg-amber-100 hover:border-amber-400 transition-all"
+                className="text-xs font-semibold tracking-widest uppercase px-4 py-2 h-8 flex items-center rounded-lg text-amber-800 border-2 border-amber-300 bg-amber-50/70 hover:bg-amber-100 hover:border-amber-400 transition-all whitespace-nowrap"
               >
                 Register New Hive
               </Link>

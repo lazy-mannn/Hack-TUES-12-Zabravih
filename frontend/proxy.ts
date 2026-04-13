@@ -10,9 +10,16 @@ const PUBLIC_PATHS = [
   '/auth/reset-password',
   '/auth/callback',
   '/auth/provider-signup',
+  // PWA / SEO files
+  '/manifest.json',
+  '/robots.txt',
+  '/sw.js',
+  '/icon',
+  '/apple-icon',
+  '/icons',
 ]
 
-const STATIC_EXT = /\.(svg|png|jpg|jpeg|gif|ico|webp|woff2?|ttf|otf|css|js|map)$/i
+const STATIC_EXT = /\.(svg|png|jpg|jpeg|gif|ico|webp|woff2?|ttf|otf|css|js|json|txt|map)$/i
 
 function isPublic(pathname: string) {
   if (STATIC_EXT.test(pathname)) return true

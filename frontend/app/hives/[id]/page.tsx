@@ -29,10 +29,10 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
 
   return (
     <div className="min-h-screen">
-      <div className="px-6 py-10 max-w-4xl mx-auto">
+      <div className="px-4 sm:px-6 py-6 sm:py-10 max-w-4xl mx-auto">
         {/* Liquid glass card */}
         <div
-          className="rounded-3xl px-8 py-8 flex flex-col gap-8"
+          className="rounded-3xl px-4 sm:px-8 py-6 sm:py-8 flex flex-col gap-6 sm:gap-8"
           style={{
             background: "rgba(255, 255, 255, 0.40)",
             backdropFilter: "blur(18px)",
@@ -52,7 +52,7 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
 
           {/* Title */}
           <div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-widest uppercase">
+            <h1 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-widest uppercase">
               {hive.name}
             </h1>
             <p className="mt-1 text-gray-600 text-sm tracking-wide">
@@ -64,7 +64,7 @@ export default async function HivePage(props: PageProps<"/hives/[id]">) {
           </div>
 
           {/* Gauges */}
-          <div className="flex justify-center gap-10 flex-wrap">
+          <div className="flex justify-center gap-4 sm:gap-10 flex-wrap">
             <GaugeCircle
               value={latest?.avg_temperature ?? null}
               type="temperature"

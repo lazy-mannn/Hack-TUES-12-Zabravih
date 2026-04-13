@@ -1,0 +1,33 @@
+{
+  "name": "SmeeHive",
+  "short_name": "SmeeHive",
+  "description": "Real-time beehive monitoring — temperature, humidity, CO₂ and queen state.",
+  "id": "/hives",
+  "start_url": "/hives",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fef3c7",
+  "theme_color": "#f59e0b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icons/192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}
