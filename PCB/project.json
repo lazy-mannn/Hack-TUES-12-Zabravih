@@ -1,0 +1,1559 @@
+{
+  "schematics": {
+    "1246dd8862ce4e9d9898ab8d42315497": {
+      "name": "MAIN",
+      "sheets": [
+        {
+          "name": "P1",
+          "id": 1,
+          "uuid": "81fb35fe3e5b46f5a121564d1a960285"
+        }
+      ]
+    }
+  },
+  "pcbs": {
+    "8d01c4232aea443ea6e0750a1d190b8d": "PCB1"
+  },
+  "panels": {},
+  "symbols": {
+    "f3e05f7855b2440cb16246cfdcfa091d": {
+      "source": "383d752f5c9243c8a82a054d0337f883|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Drawing-Symbol_A4",
+      "version": "1734001722",
+      "type": 20
+    },
+    "80102b7c1fcd4e64ba899ac6653bccfe": {
+      "source": "d219b3e194dd4186820eec0b92627f5c|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"IoT/Communication Modules\",\"WiFi Modules\"]",
+      "title": "ESP32-S3-WROOM-1(N16R8)",
+      "version": "1744299972",
+      "type": 2
+    },
+    "8ed06a84520e4f3ebd9211d4fc680ef4": {
+      "source": "1c18ed5a06f64a07bdb5b0cf525b3d9e|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Ground-GND",
+      "version": "1649575362",
+      "type": 18
+    },
+    "1b128271132c4bdbbb17eef607ae12a8": {
+      "source": "b4fc5614febe4d0c966db51b22af788e|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Power-VCC",
+      "version": "1723254107",
+      "type": 18
+    },
+    "61ac741f9aeb46db961ba8eac7fa22f6": {
+      "source": "54eabdd51a944cc4979f82364011068c|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]",
+      "title": "CAP",
+      "version": "1655976706",
+      "type": 2
+    },
+    "c72bc2fb12814616b0ace02862440662": {
+      "source": "d7b600b408ea4b1cbf3def7dadc6f18a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Displays\",\"OLED Display\"]",
+      "title": "HS91L02W2C01",
+      "version": "1705041603",
+      "type": 2
+    },
+    "685214de61c94742ad8e8229beb526bb": {
+      "source": "d7167df5d22a46e28284509dedfad680|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Netport-IN",
+      "version": "1649575449",
+      "type": 19
+    },
+    "ef6b008ac2bb4f1a88851551c02d62d5": {
+      "source": "122139a9a065a858c22c339cf7770e74|34ba8051e5bd2a0cd866669e6685fb015ec9298ae6b80914b61a47b4090c4403",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "GT-USB-7010ASV",
+      "version": "fefa9cef46174d49aa9d6c9f51098961",
+      "type": 2
+    },
+    "85e0805728504524bf82bd452f5bd405": {
+      "source": "8ea258ba25c64462be491552cf1f3086|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Through Hole Resistors\"]",
+      "title": "Res",
+      "version": "1742444708",
+      "type": 2
+    },
+    "8db9c775183f4eaa9334b123603b31b4": {
+      "source": "d78444639db74cd08b94ad4caf42333e|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Switches\",\"Tactile Switches\"]",
+      "title": "TSD003A05526A02",
+      "version": "1742351720",
+      "type": 2
+    },
+    "9343b55d6b21409f9562124ed2a0bde2": {
+      "source": "050d65d2959c41f0ba83c66c7ef5825f|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "ME6211C33M5G-N",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]",
+      "title": "ME6211C33M5G-N",
+      "version": "1742925071",
+      "type": 2
+    },
+    "1de1e88a0baa43b9b3028a08715d4f4c": {
+      "source": "42d388a38d0444b9b929c76cf2040420|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Inductors, Coils, Chokes\",\"Inductors (SMD)\"]",
+      "title": "MGFL3216F2R2MT-LF",
+      "version": "1678848950",
+      "type": 2
+    },
+    "28a28c1b42a24e54bbb3ca60d0ab13b2": {
+      "source": "8854411891c241428f491c20598edcf2|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Power Management (PMIC)\",\"Battery Management\"]",
+      "title": "BQ24090DGQR",
+      "version": "1710233145",
+      "type": 2
+    },
+    "6801521250074e5d8cdb50586fe58299": {
+      "source": "b03abeb2aade4302876437054ac2ce2e|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Pin Headers\"]",
+      "title": "210S-1*2P L=11.6MMGold-plated black",
+      "version": "1741152661",
+      "type": 2
+    },
+    "b7db5af626f146699acb9568423d2640": {
+      "source": "f93c143879294c758c87953056989fdb|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Switches\",\"Slide Switches\"]",
+      "title": "SK-12F04-G050",
+      "version": "1719220514",
+      "type": 2
+    },
+    "acfd9b434de04830acf0d46dab8ad12f": {
+      "source": "43af0613200e4169b62ba02af381f635|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Female Headers\"]",
+      "title": "Header-Female-2.54_1x5",
+      "version": "1698205564",
+      "type": 2
+    },
+    "24bb1a3e6960461096247061db683b05": {
+      "source": "296f974a8ebf41c0ab8a009e4b1a5341|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Female Headers\"]",
+      "title": "2.54-1*4P母",
+      "version": "1697189109",
+      "type": 2
+    },
+    "19655f0f0a064c618bb765f555a1a61c": {
+      "source": "48dfb95b146c447a9fd6d5869a609008|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "VCC",
+      "version": "1660802272",
+      "type": 18
+    },
+    "88a77407a8a04149864115f048924903": {
+      "source": "f1d47f448a764ba6bb69e68f1a256a8e|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "LED_G",
+      "version": "1701689788",
+      "type": 2
+    },
+    "f5d82acc916e4d20b212367198770194": {
+      "source": "337f98afd0264cae93d16cc3bf65754a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]",
+      "title": "电阻",
+      "version": "1660802295",
+      "type": 2
+    },
+    "9cc0a03c670c445a95bd335d5be3c415": {
+      "source": "029dc91398624049926195124347581a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "GND",
+      "version": "1660803029",
+      "type": 18
+    },
+    "39255ea80f5247f3a3d324200eb95603": {
+      "source": "e733cb438fa042ae9ade3b3377c5908a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "IN",
+      "version": "1660803040",
+      "type": 19
+    },
+    "643b3479df4d40ec9a2b9fd812c63c07": {
+      "source": "6998ea8282e8419aa965f259b2162612|userLib",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "TPSM84209",
+      "version": "1775291980",
+      "type": 2
+    },
+    "e93b4837ad434524bd5311bde5eb86dc": {
+      "source": "36ffaebea1ed493db81e21862611df53|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Power Management (PMIC)\",\"DC-DC Converters\"]",
+      "title": "TPSM84209RKHR",
+      "version": "1733363702",
+      "type": 2
+    },
+    "b2075fcc11eb4075811af0d590f43ebf": {
+      "source": "5ea26a67015248a59cc5d510dcc0787d|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Screw Terminal Blocks\"]",
+      "title": "KF301-5.0-2P",
+      "version": "1698742815",
+      "type": 2
+    },
+    "54757b74f55f44b8a1921b362401ee6e": {
+      "source": "28253d1054c543b2ba0a6a5be3b3004d|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]",
+      "title": "RT0603CRE071K37L",
+      "version": "1706583672",
+      "type": 2
+    },
+    "ac6364e0bcac48b992d056ed11c66c0d": {
+      "source": "084c6681f4184361b00eb9f5b8c25571|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Tantalum Capacitors\"]",
+      "title": "CA45A-B-10V-100UF-K",
+      "version": "1745688844",
+      "type": 2
+    },
+    "30ffc120eaf6419985655df7e1cf0f88": {
+      "source": "ccedf877d054446794e589b232182598|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Aluminum Electrolytic Capacitors - SMD\"]",
+      "title": "GVZ1H107M0810CNVC",
+      "version": "1752132021",
+      "type": 2
+    },
+    "ace99f6bbe60432fb0273682430e4d46": {
+      "source": "b1a3f8090a404cc58719ff98849fed8e|userLib",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "MPU6050",
+      "version": "1775751948",
+      "type": 2
+    }
+  },
+  "footprints": {
+    "7e26ba9b7b3c41d29609a62a9363321b": {
+      "title": "WIRELM-SMD_ESP32-S3-WROOM-1",
+      "source": "dce0099a18df49d3b27bb46b31b62ebf|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1725239155",
+      "type": 4,
+      "desc": ";SMD,18x25.5mm;-;SMD-40P;SMD-41P;WIRELM-SMD;2D",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"WIRELM-SMD\"]"
+    },
+    "f27c12ff63174fbfa4b2a38512a3fb65": {
+      "title": "C0603",
+      "source": "f499007f726c45dbbd59d7d6a82bc126|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1734501471",
+      "type": 4,
+      "desc": ";0603;1206;0805;0201;/;---;-;SMD;C0603;AAAAAA1;c0603;0603封装;Cap;CAP;0604;C0603_L;0603-CAP;1608;0704",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "f7826189c66c43928417502e032bca28": {
+      "title": "OLED-TH_L38.0-W12.0_HS91L02W2C01",
+      "source": "45a22b83e1be427d823724b0c68e41f3|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1702952943",
+      "type": 4,
+      "desc": ";-",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"OLED-TH\"]"
+    },
+    "b1dacc1a0bb54db580d0323a320b83d0": {
+      "title": "USB-C-SMD_G-SWITCH_GT-USB-7010ASV",
+      "source": "0a86c98d4dfc5c8426a66c70821d9296|34ba8051e5bd2a0cd866669e6685fb015ec9298ae6b80914b61a47b4090c4403",
+      "version": "e293d06b8842fe35bc5056a882e39ea5",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "73f91bc8d0f44757b23719f067862255": {
+      "title": "R0603",
+      "source": "b44c1b381d26462586b8a8d9fac22ec8|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1766479705",
+      "type": 4,
+      "desc": "0603;-;1206;1608;0201;SMD;0805;---;2.2KR;R0603;R603;603;插件;Res2;0603R;ESD0603;0603-S;0603-R;LC-0603_R;RES0603;RES0603-SMD-2P;5101%;Res0603;ROHM Semiconductor",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-SMD\"]"
+    },
+    "9c36873a5a6246a3baf2e92320e43ac8": {
+      "title": "SW-SMD_4P-L6.0-W6.0-P4.50-LS8.6",
+      "source": "5f1fb2cace4e4e5d8b115919b5a5c1dd|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1663853163",
+      "type": 4,
+      "desc": ";SMD;SMD,6.2x6.2mm;插件;SMD-4_L6.0-W6.0-P4.50-LS8.6;SMD-4;SMD-4,6x6mm;SW-SMD_4P;SMD-4P,6x6mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SW-SMD\"]"
+    },
+    "82757fa594d14ea0a307b4d1b277113b": {
+      "title": "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL",
+      "source": "f2785a7a800f4327acd4dfdd25d8d5e3|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1652427626",
+      "type": 4,
+      "desc": ";SOT-23-5;SMV;-;SOT-23;TSOT-23-5;SOT-5;TSOP-5;SOT-23-5L;SOT23-5;SOT-23-Thin-5;SOT-25;SOT-25J;SSOP-5;SC-70-5;SOT-753;SOT-23-5_DBV;SOT-353;SOT-25-5;SOT-23-5(MTP5);SOIC-8;SC-74A;SC-74A(SOT-753);SOT23-5L",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SOT-23-5\"]"
+    },
+    "0fde950b507b4910961bde0589843d0c": {
+      "title": "L1206",
+      "source": "deedd9e7651b4b6fb37f5974868e0d43|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1652415950",
+      "type": 4,
+      "desc": ";1206;SMD;1812;-;L1206;120ohm_100MHz;L0805;-L1206;3.2x1.6mm;磁珠1206;SMD,1.6x3.2mm;SMD_L3.2-W1.6",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"IND-SMD\"]"
+    },
+    "395f0d4bf7cf4ea4bfa0c4f514fe5e77": {
+      "title": "MSOP-10_L3.0-W3.0-P0.50-LS5.0-BL-EP",
+      "source": "5c7b28ae2f484d86b18abebe2aa40a2c|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1653437213",
+      "type": 4,
+      "desc": ";MSOP-10-EP;MSOP-10;MSOP-10EP;HMSOP-10;Power-Pad-MSOP-10;MSOP-10_EP;MSOP-EP-10;MSOP-10_L3.0-W3.0-P0.50-LS5.0-BL-EP",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"MSOP-10\"]"
+    },
+    "e38643938ba14657b9513dcd80f2d352": {
+      "title": "HDR-TH_2P-P2.54-V-M-1",
+      "source": "22176da086af4ffba6094b8c5388d2db|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1754667161",
+      "type": 4,
+      "desc": "插件,P=2.54mm;直插,P=2.54mm;直插,P=2.5mm;HDR-TH_2P-P2.54-L5.1-W2.5;TH-2P;排针;2.54x2;PinHeader_1x02_P2.54mm_Vertical;插件;HDR-TH;插件,P=0.9mm;HDR-TH_2P-P2.54-V-M-1",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"HDR-TH\"]"
+    },
+    "6513e2c34f1a444e99862cb3b99e4c9d": {
+      "title": "SW-TH_G-SWITCH_SK-12F04-G050",
+      "source": "0b54d8f2848941faa3e437186e8fa0d5|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1676344261",
+      "type": 4,
+      "desc": ";插件",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SW-TH\"]"
+    },
+    "eb9eaafea5474c4a85f5d68a9ad6267e": {
+      "title": "HDR-TH_5P-P2.54-V-F",
+      "source": "b955df4dc2494c8c92253b7c9f78b8be|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1718496062",
+      "type": 4,
+      "desc": ";插件,P=2.54mm;SIP5;插件;TH-5P,P=2.54mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"HDR-TH\"]"
+    },
+    "e881148ad2474eca984003fd005c3c47": {
+      "title": "HDR-TH_4P-P2.54-V-F",
+      "source": "4eeed8bce90e4a8eaca29fd80020197d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1727322018",
+      "type": 4,
+      "desc": ";插件,P=2.54mm;CONN-TH_P2.54-4P;HDR-TH_4P;HDR-TH;排母4P;排母直插4P;1x4P-2.54mm排母,塑高5.7mm;TH-4P,P=2.54mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"HDR-TH\"]"
+    },
+    "6872b80fc82e41ae9c364997e8d7c6f7": {
+      "title": "LED0603-RD_GREEN",
+      "source": "8a4273e10d9442c8a3e5a2babb3d3b77|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1723345324",
+      "type": 4,
+      "desc": ";0603;SMD;-;LED0603;LED_Green;LEDC1608(0603);LED0603-RD_GREEN;G;ChipCap.翠绿色高亮0603470nm;LED0603-RDl绿灯;D-0603;HXLED_G001;LED-0603;0603LED;0603-G;立贴LED0603-2P-Green;LED0603_G;LED0603-G",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"LED0603-RD\"]"
+    },
+    "b0ed3730e3524043b32c9ab99bd5aa78": {
+      "title": "R0603",
+      "source": "50b4943912284dab97752312e589e9e2|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660802177",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-SMD\",\"\"]"
+    },
+    "7871df3bfdcf4fd3bee02849729abce6": {
+      "title": "QFN-9_L4.5-W4.0_TPSM84209RKHR",
+      "source": "9f6ace63679547bba3ab17b58245ef6c|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1690158787",
+      "type": 4,
+      "desc": ";QFN-9",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"QFN-9\"]"
+    },
+    "e11d4f4ab4e94affb64dd19b58d20ea2": {
+      "title": "CONN-TH_P5.00_KF301-5.0-2P",
+      "source": "76a20063fc8042e29f470378cabc383d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1763792854",
+      "type": 4,
+      "desc": "插件,P=5mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CONN-TH\"]"
+    },
+    "7621476f10cb49c2801baf89c59221d6": {
+      "title": "CAP-SMD_L3.5-W2.8-R-RD",
+      "source": "da005c6f50c644859d305f862dde097d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1653542665",
+      "type": 4,
+      "desc": ";1411;CASE-B-3528;CASE-T-3528;-;CASE-B_3528;SMD;SMD,2.8x3.5mm;3528;CASE-B-3528-21(mm);CAP-SMD_L3.5-W2.8-R-RD;CAP-SMD-2P;钽电容3528",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\"]"
+    },
+    "bdb23ad1953b46cb8265eb750b1bce64": {
+      "title": "CAP-SMD_BD8.0-L8.3-W8.3-FD",
+      "source": "e1e86835501c419a9eb94f73f8936f39|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1652410779",
+      "type": 4,
+      "desc": ";SMD,D8xL10.5mm;SMD;SMD,D8xL6.2mm;SMD,D8xL12mm;SMD,8x10mm;SMD,D8xL7mm;SMD,D8xL10mm;SMD,D8xL6.5mm;SMD,8x6.9mm;SMD,D8xL10.2mm;SMD,8x10.2mm;SMD,D8xL11.7mm;SMD,D8xL6.9mm;SMD,D8xL6mm;SMD,8x6.2mm;SMD,D8xL12.5mm;SMD,D8xL11.9mm;SMD,D8xL5.4mm;SMD,D8xL6.7mm;SMD,D8xL15mm;SMD,D8xL7.9mm;SMD,D8xL14.5mm;SMD,D8xL16.5mm;-;SMD,8x10.5mm;SMD,8x12mm;SMD,D8xL10.8mm;8*10.5;SMD,8x6.5mm;SMD,D8xL11.5mm;CAP-SMD_BD8.0-L8.3-W8.3-RD;CAP-SMD_BD8.0-L8.3-W8.3-FD;CAP_SMD;CAP-SMD;CT8X12-C;CAP-SMD,8x10.5mm;8x10.2;8x10.5_22UF/100V;SDM,D8XL12.2;SMD_D8XL10;SMD,D8XL10.5;SMD,D8XL10;SMD,D8X10.2L;SMD,D8XL10.5mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\"]"
+    }
+  },
+  "devices": {
+    "243030587fbe48629d903f7bfb8cd3d5": {
+      "title": "Drawing-Symbol_A4",
+      "attributes": {
+        "@Project Name": "Project Name",
+        "@Page Count": "3",
+        "@Update Date": "2021.11.05",
+        "@Create Date": "2021.11.05",
+        "@Schematic Name": "Schematic Name",
+        "@Page No": "1",
+        "@Page Name": "P1",
+        "Company": "EasyEDA.com",
+        "Reviewed": "",
+        "Version": "V1.0",
+        "Page Size": "A4",
+        "Drawn": "",
+        "Name": "",
+        "@Create Time": "",
+        "@Update Time": "",
+        "Border": "1",
+        "Width": "1170",
+        "Height": "825",
+        "Region Start": "1",
+        "X Region Count": "6",
+        "Y Region Count": "4",
+        "Blade Width": "10",
+        "Color": "",
+        "Title Block Position": "3",
+        "Title Block": "1",
+        "@Board Name": "",
+        "Symbol": "f3e05f7855b2440cb16246cfdcfa091d",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "754952feec9e48d6afd574513e1ca00b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1734001722",
+      "custom_tags": "[\"\",\"\"]"
+    },
+    "e47830575ee0486fa692c3df23a8c686": {
+      "title": "ESP32-S3-WROOM-1-N16R8",
+      "attributes": {
+        "LCSC Part Name": "不带固件 通用型Wi-Fi+低功耗蓝牙MCU模组",
+        "Supplier Part": "C2913202",
+        "Manufacturer": "ESPRESSIF(乐鑫)",
+        "Manufacturer Part": "ESP32-S3-WROOM-1-N16R8",
+        "Supplier Footprint": "SMD,25.5x18mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/ESP32-S3-WROOM-1-N16R8/3198300.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "80102b7c1fcd4e64ba899ac6653bccfe",
+        "Designator": "U?",
+        "Footprint": "7e26ba9b7b3c41d29609a62a9363321b",
+        "3D Model": "dbf21c799c1c42a38df84fd714a1a1c8",
+        "3D Model Title": "WIRELM-SMD_ESP32-S3-WROOM-1",
+        "3D Model Transform": "708.73866,1003.97437,0,0,0,0,0,143.7,0",
+        "Utilized IC / Part": "ESP32-S3R8",
+        "Interface Type": "I2C；GPIO；UART；SPI；USB；I2S",
+        "Value": "2.4GHz",
+        "Antenna Type": "On-board PCB Antenna",
+        "Output Power": "20.5dBm",
+        "Voltage - Supply": "3V~3.6V",
+        "Receive  Current": "95mA",
+        "Send  Current": "355mA",
+        "Sensitivity": "-103.5dBm",
+        "Operating Temperature": "-40℃~+65℃",
+        "Name": "={Value}",
+        "Description": "Utilized IC / Part:ESP32-S3R8 Interface Type:I2C；GPIO；UART；SPI；USB；I2S Frequency:2.4GHz Antenna Type:On-board PCB Antenna Output Power:20.5dBm Output Power:20.5dBm Voltage - Supply:3V~3.6V Voltage - Supply:3V~3.6V Receive  Current:95mA Send  Current:355mA"
+      },
+      "description": "Utilized IC / Part:ESP32-S3R8 Interface Type:I2C；GPIO；UART；SPI；USB；I2S Frequency:2.4GHz Antenna Type:On-board PCB Antenna Output Power:20.5dBm Output Power:20.5dBm Voltage - Supply:3V~3.6V Voltage - Supply:3V~3.6V Receive  Current:95mA Send  Current:355mA",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20251022/10D7CD9217EB4ABE475D79839FA3CFFB.jpg"
+      ],
+      "source": "d65778533f464ec4bc3c3732bd686263|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1664049637",
+      "custom_tags": "[\"IoT/Communication Modules\",\"WiFi Modules\"]"
+    },
+    "0bb9c45731ce4982a7b97fa5b832e5a3": {
+      "title": "Ground-GND",
+      "attributes": {
+        "Symbol": "8ed06a84520e4f3ebd9211d4fc680ef4",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "2e4e71fea06848c9a86eef0ed6338204|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649575370",
+      "custom_tags": "[]"
+    },
+    "8edf01359cd24e7688239b21df984e8b": {
+      "title": "Power-VCC",
+      "attributes": {
+        "Global Net Name": "VCC",
+        "Name": "",
+        "Symbol": "1b128271132c4bdbbb17eef607ae12a8",
+        "3D Model": "",
+        "3D Model Title": "",
+        "3D Model Transform": "",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "7737efc32ff44ecb8cf68152f3fbd014|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1723254107",
+      "custom_tags": "[]"
+    },
+    "d2bb805dd5d4476e8060623ab48c2fdb": {
+      "title": "CAP_0603",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "C?",
+        "Supplier Footprint": "0603",
+        "Symbol": "61ac741f9aeb46db961ba8eac7fa22f6",
+        "Footprint": "f27c12ff63174fbfa4b2a38512a3fb65",
+        "3D Model": "624118aa3cc7497086c383c2d72e0852",
+        "3D Model Title": "C0603_L1.6-W0.8-H0.8",
+        "3D Model Transform": "62.992,31.496,0,0,0,0,0,0,0",
+        "Value": "100nF",
+        "Name": "={Value}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "035e6ff02f374c0e9e78a0e542711bab|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1655976757",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]"
+    },
+    "8bb3c11edbfb404bbcc6c3b37da6d7c6": {
+      "title": "HS91L02W2C01",
+      "attributes": {
+        "LCSC Part Name": "0.91寸OLED显示屏白光IIC",
+        "Supplier Part": "C5248081",
+        "Manufacturer": "HS(汉昇)",
+        "Manufacturer Part": "HS91L02W2C01",
+        "Supplier Footprint": "-",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/HS91L02W2C01/5960632.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "c72bc2fb12814616b0ace02862440662",
+        "Designator": "OLED?",
+        "Footprint": "f7826189c66c43928417502e032bca28",
+        "3D Model": "81966b85aecc40bd95cda2b797735fc1",
+        "3D Model Title": "OLED-TH_L38.0-W12.0_HS91L02W2C01",
+        "3D Model Transform": "1496.06,472.44,0,0,0,0,688.975,0,0",
+        "Controller Type": "SSD1306 chip",
+        "Interface": "I2C",
+        "Size": "0.91",
+        "Dot Pixels": "128x32",
+        "Operating Temperature": "-",
+        "Type of Drive": "Passive (PMOLED)",
+        "Display Range": "22.384x5.584mm",
+        "Display Color": "White",
+        "Luminance": "150cd/m2",
+        "Function": "-",
+        "Quiescent Current": "-",
+        "Voltage - Supply  For Display": "-",
+        "Voltage - Supply  For Logic": "1.65V~3.3V",
+        "Name": "={Manufacturer Part}",
+        "Description": "Controller Type:SSD1306 chip Interface:I2C Size:0.91 Dot Pixels:128x32 Operating Temperature:- Operating Temperature:- Type of Drive:Passive (PMOLED) Display Range:22.384x5.584mm Display Color:White Luminance:150cd/m2 Function:- Quiescent Current:- Voltag"
+      },
+      "description": "Controller Type:SSD1306 chip Interface:I2C Size:0.91 Dot Pixels:128x32 Operating Temperature:- Operating Temperature:- Type of Drive:Passive (PMOLED) Display Range:22.384x5.584mm Display Color:White Luminance:150cd/m2 Function:- Quiescent Current:- Voltag",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/217B31AB536364107BD8F5B416AFDF1D.jpg"
+      ],
+      "source": "24d2506ee3c14d2f8f5903ad9a77f7bb|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1702521602",
+      "custom_tags": "[\"Displays\",\"OLED Display\"]"
+    },
+    "14005079e5fc4671a62ac70cc3bd7b16": {
+      "title": "Netport-IN",
+      "attributes": {
+        "Symbol": "685214de61c94742ad8e8229beb526bb",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "1e49409bec974672828f01a773e33450|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649575456",
+      "custom_tags": "[]"
+    },
+    "2f9bb1fe63ac48429a534fbe38d07add": {
+      "title": "GT-USB-7010ASV",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "ef6b008ac2bb4f1a88851551c02d62d5",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2988369",
+        "Manufacturer": "G-Switch(品赞)",
+        "Manufacturer Part": "GT-USB-7010ASV",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "b1dacc1a0bb54db580d0323a320b83d0",
+        "Name": "GT-USB-7010ASV",
+        "Description": "",
+        "3D Model": "be50d0558ed84d368584cedb268b51a8",
+        "3D Model Title": "USB-C-SMD_G-SWITCH_GT-USB-7010ASV"
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "122139a9a065a858c22c339cf7770e74|34ba8051e5bd2a0cd866669e6685fb015ec9298ae6b80914b61a47b4090c4403",
+      "version": "bea93c8c188e871bd3843da4f3161119",
+      "custom_tags": ""
+    },
+    "e36d31f4aa76417885947921af58df49": {
+      "title": "Res_0603",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "R?",
+        "Supplier Footprint": "0603",
+        "Symbol": "85e0805728504524bf82bd452f5bd405",
+        "Footprint": "73f91bc8d0f44757b23719f067862255",
+        "3D Model": "112863783b5b41f1b5254f87eedc7932",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Value": "10K",
+        "Name": "={Value}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "77e4e58c188a4330a8ecb535773aacb1|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1655970956",
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]"
+    },
+    "b3d541c81da5434ab8f21aa6b3e128be": {
+      "title": "TSD003A05526A02",
+      "attributes": {
+        "LCSC Part Name": "6*6*5.5H-JTS 260gf",
+        "Supplier Part": "C2888578",
+        "Manufacturer": "BZCN(博众电气)",
+        "Manufacturer Part": "TSD003A05526A02",
+        "Supplier Footprint": "SMD-4P,6x6mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/TSD003A05526A02/3108981.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "8db9c775183f4eaa9334b123603b31b4",
+        "Designator": "SW?",
+        "Footprint": "9c36873a5a6246a3baf2e92320e43ac8",
+        "3D Model": "7f2caefee9ea4f59af70290627e08230",
+        "3D Model Title": "SW-SMD_4P-L6.0-W6.0-P4.50-LS8.6",
+        "3D Model Transform": "338.582,236.22,0,0,0,0,0,0,0",
+        "Actuator Style": "Round Button",
+        "Operating Force": "2.6N",
+        "Mounting Type": "Surface Mount,Vertical",
+        "Length": "6mm",
+        "Width": "6mm",
+        "Switch Height": "5.5mm",
+        "Contact Current": "50mA",
+        "Voltage Rating": "12V",
+        "Life": "-",
+        "Name": "={Manufacturer Part}",
+        "Description": "Actuator Style:Round Button Operating Force:2.6N Mounting Type:Surface Mount,Vertical Length:6mm Width:6mm Switch Height:5.5mm Contact Current:50mA Voltage Rating:12V Life:-"
+      },
+      "description": "Actuator Style:Round Button Operating Force:2.6N Mounting Type:Surface Mount,Vertical Length:6mm Width:6mm Switch Height:5.5mm Contact Current:50mA Voltage Rating:12V Life:-",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230107/8AC44B7FDD6F9EF43277E6B210A5E92D.jpg"
+      ],
+      "source": "df9d4de2bd4241678f71b45747e91f63|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1661892356",
+      "custom_tags": "[\"Switches\",\"Tactile Switches\"]"
+    },
+    "5687699b091344ecb0a2e8ca640e2245": {
+      "title": "ME6211C33M5G-N",
+      "attributes": {
+        "LCSC Part Name": "输入6V 输出3.3V 500mA",
+        "Supplier Part": "C82942",
+        "Manufacturer": "MICRONE(南京微盟)",
+        "Manufacturer Part": "ME6211C33M5G-N",
+        "Supplier Footprint": "SOT-23-5",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/ME6211C33M5G-N/84106.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "9343b55d6b21409f9562124ed2a0bde2",
+        "Designator": "LDO?",
+        "Footprint": "82757fa594d14ea0a307b4d1b277113b",
+        "3D Model": "3168b22659ce4998ae232d44bb704e0a",
+        "3D Model Title": "SOT-23-5_L2.9-W1.6-H1.1-LS2.8-P0.95",
+        "3D Model Transform": "118.60433,114.173,0,90,0,0,0.0005,0.0005,0",
+        "Output Type": "Fixed",
+        "Voltage - Supply": "6V",
+        "Output Voltage": "3.3V",
+        "Output Current": "500mA",
+        "Power Supply Rejection Ratio (PSRR)": "70dB@(1kHz)",
+        "Voltage Dropout": "120mV@(100mA)",
+        "standby current": "60uA",
+        "Noise": "50uVrms",
+        "Features": "Over Current Protection；Enable；Short Circuit Protection",
+        "Operating Temperature": "-40℃~+150℃",
+        "Output Configuration": "Positive",
+        "Number of Outputs": "1",
+        "Name": "={Manufacturer Part}",
+        "Description": "Output Type:Fixed Voltage - Supply:6V Output Voltage:3.3V Output Voltage:3.3V Output Current:500mA Power Supply Rejection Ratio (PSRR):70dB@(1kHz) Voltage Dropout:120mV@(100mA) standby current:60uA Noise:50uVrms Features:Over Current Protection；Enable；Sho"
+      },
+      "description": "Output Type:Fixed Voltage - Supply:6V Output Voltage:3.3V Output Voltage:3.3V Output Current:500mA Power Supply Rejection Ratio (PSRR):70dB@(1kHz) Voltage Dropout:120mV@(100mA) standby current:60uA Noise:50uVrms Features:Over Current Protection；Enable；Sho",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221231/AABADD18C0F3035BE4EA87C09068C305.jpg"
+      ],
+      "source": "0c60a448115c435b947647a7222a5ab0|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1677582536",
+      "custom_tags": "[\"Power Management (PMIC)\",\"Voltage Regulators - Linear, Low Drop Out (LDO) Regulators\"]"
+    },
+    "777a949679344bd6a37dc5361546c204": {
+      "title": "MGFL3216F2R2MT-LF",
+      "attributes": {
+        "LCSC Part Name": "2.2uH ±20%",
+        "Supplier Part": "C486337",
+        "Manufacturer": "microgate(麦捷科技)",
+        "Manufacturer Part": "MGFL3216F2R2MT-LF",
+        "Supplier Footprint": "1206",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/MGFL3216F2R2MT-LF/494810.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "1de1e88a0baa43b9b3028a08715d4f4c",
+        "Designator": "L?",
+        "Footprint": "0fde950b507b4910961bde0589843d0c",
+        "3D Model": "4532623116ac46879d02e1c8d9589dbf",
+        "3D Model Title": "L1206_L3.2-W1.6-H1.1",
+        "3D Model Transform": "125.984,62.835,0,0,0,0,0,0,0",
+        "Value": "2.2uH",
+        "Tolerance": "±20%",
+        "Current Rating": "1.3A",
+        "Current - Saturation (Isat)": "-",
+        "DC Resistance(DCR)": "150mΩ",
+        "Q @ Frequency": "-",
+        "Frequency - Self Resonant": "-",
+        "Ratings": "-",
+        "Name": "={Value}",
+        "Description": "Inductance:2.2uH Tolerance:±20% Tolerance:±20% Current Rating:1.3A Current - Saturation (Isat):- DC Resistance(DCR):150mΩ Q @ Frequency:- Frequency - Self Resonant:- Ratings:-"
+      },
+      "description": "Inductance:2.2uH Tolerance:±20% Tolerance:±20% Current Rating:1.3A Current - Saturation (Isat):- DC Resistance(DCR):150mΩ Q @ Frequency:- Frequency - Self Resonant:- Ratings:-",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230107/57FF2F0B5404905567ACF9B9B8A3518E.jpg"
+      ],
+      "source": "d3f634aa96b04bed9973ffb9ee173483|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660161470",
+      "custom_tags": "[\"Inductors, Coils, Chokes\",\"Inductors (SMD)\"]"
+    },
+    "dc25f0378c0649d3ae1a6ae9bc5b7ff3": {
+      "title": "BQ24090DGQR",
+      "attributes": {
+        "LCSC Part Name": "1A单输入单节锂离子和锂聚合物电池充电器",
+        "Supplier Part": "C43306",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "BQ24090DGQR",
+        "Supplier Footprint": "MSOP-10-EP",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://www.ti.com/cn/lit/gpn/bq24090",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "28a28c1b42a24e54bbb3ca60d0ab13b2",
+        "Designator": "U?",
+        "Footprint": "395f0d4bf7cf4ea4bfa0c4f514fe5e77",
+        "3D Model": "21e27e7183244692abf5573754e5623a",
+        "3D Model Title": "MSOP-10_L3.0-W3.0-H1.1-LS5.0-P0.50",
+        "3D Model Transform": "118.11,196.85,0,0,0,0,0,0,0",
+        "The Chip Type": "Charging IC",
+        "Voltage - Supply": "4.45V~6.45V",
+        "Charge Current - Max": "1A",
+        "Charging Saturation Voltage": "4.2V",
+        "Type of Battery": "Lithium Battery",
+        "Number of Cells": "1",
+        "Operating Temperature": "0℃~+125℃",
+        "Battery Temperature Detection": "Support",
+        "0V Battery Charge": "Support",
+        "Supply Current (Iq)": "1mA",
+        "Name": "={Manufacturer Part}",
+        "Description": "The Chip Type:Charging IC Voltage - Supply:4.45V~6.45V Voltage - Supply:4.45V~6.45V Charge Current - Max:1A Charging Saturation Voltage:4.2V Type of Battery:Lithium Battery Number of Cells:1 Number of Cells:1 Operating Temperature:0℃~+125℃ Operating Tempe"
+      },
+      "description": "The Chip Type:Charging IC Voltage - Supply:4.45V~6.45V Voltage - Supply:4.45V~6.45V Charge Current - Max:1A Charging Saturation Voltage:4.2V Type of Battery:Lithium Battery Number of Cells:1 Number of Cells:1 Operating Temperature:0℃~+125℃ Operating Tempe",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221229/5BF061A8C548CCF30CEFEDA524B88C9C.jpg"
+      ],
+      "source": "c4193363f2bc4f8fafaec9a7039ff6df|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660160235",
+      "custom_tags": "[\"Power Management (PMIC)\",\"Battery Management\"]"
+    },
+    "8d5aa2662af645118864eda0a1512019": {
+      "title": "HDR-M_2.54_1x2P",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "H?",
+        "Supplier Footprint": "Through",
+        "Symbol": "6801521250074e5d8cdb50586fe58299",
+        "Footprint": "e38643938ba14657b9513dcd80f2d352",
+        "3D Model": "e506c2b6a89c4aacb020357246aab725",
+        "3D Model Title": "HDR-M-2.54_1x2",
+        "3D Model Transform": "200,100,0,0,0,0,0,0,-118.11",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "d98d13e0004f497ab648c39196f8b636|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1657003441",
+      "custom_tags": "[\"Connectors\",\"Pin Headers\"]"
+    },
+    "16b8164ccbb445d4b0f77499fa905463": {
+      "title": "SK-12F04-G050",
+      "attributes": {
+        "LCSC Part Name": "柄长5mm 卧插两档 滑动开关",
+        "Supplier Part": "C2848876",
+        "Manufacturer": "G-Switch(品赞)",
+        "Manufacturer Part": "SK-12F04-G050",
+        "Supplier Footprint": "弯插,12.2x4.9mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/SK-12F04-G050/3048225.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "b7db5af626f146699acb9568423d2640",
+        "Designator": "SW?",
+        "Footprint": "6513e2c34f1a444e99862cb3b99e4c9d",
+        "3D Model": "8d13b09a767d42b5989bc9fd7abefb80",
+        "3D Model Title": "SW-TH_G-SWITCH_SK-12F04-G050",
+        "3D Model Transform": "480.314,417.326,0,0,0,0,0,-98.425,-137.795",
+        "Circuit": "SPDT",
+        "Actuator Style": "Rectangular Columnar",
+        "Termination Style": "PC Pin",
+        "Length": "12.2mm",
+        "Width": "4.9mm",
+        "Switch Height": "10.6mm",
+        "Mounting Type": "Right Angle",
+        "Actuator Color": "Black",
+        "Current Rating": "1A",
+        "Voltage Rating": "24V",
+        "Life": "10,000 Cycles",
+        "Operating Temperature": "-25℃~+70℃",
+        "Name": "={Manufacturer Part}",
+        "Description": "Circuit:SPDT Actuator Style:Rectangular Columnar Termination Style:PC Pin Length:12.2mm Width:4.9mm Switch Height:10.6mm Mounting Type:Right Angle Actuator Color:Black Current Rating:1A Voltage Rating:24V Life:10,000 Cycles Operating Temperature:-25℃~+70℃"
+      },
+      "description": "Circuit:SPDT Actuator Style:Rectangular Columnar Termination Style:PC Pin Length:12.2mm Width:4.9mm Switch Height:10.6mm Mounting Type:Right Angle Actuator Color:Black Current Rating:1A Voltage Rating:24V Life:10,000 Cycles Operating Temperature:-25℃~+70℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/58E7982373DE88D8FAF7818DFF1E9187.jpg"
+      ],
+      "source": "9eecf8047ec640c5a29801f0a6e55c3d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660168823",
+      "custom_tags": "[\"Switches\",\"Slide Switches\"]"
+    },
+    "0ad986c0c08440a0b087fb0037465aa3": {
+      "title": "HDR-F_2.54_1x5P",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "H?",
+        "Supplier Footprint": "Through",
+        "Symbol": "acfd9b434de04830acf0d46dab8ad12f",
+        "Footprint": "eb9eaafea5474c4a85f5d68a9ad6267e",
+        "3D Model": "09b454fc83654d1c89d8b683558bcb41",
+        "3D Model Title": "HDR-TH_5P-P2.54-V-F",
+        "3D Model Transform": "519.684,98.464,0,0,0,0,0,0,-124.016",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "dcdb4e0fd7854160b7b82a87f6a56c99|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1657005622",
+      "custom_tags": "[\"Connectors\",\"Female Headers\"]"
+    },
+    "a712d0d8e45d43fa97ff8bb79b9e2e1c": {
+      "title": "HDR-F_2.54_1x4P",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "H？",
+        "Supplier Footprint": "Through",
+        "Symbol": "24bb1a3e6960461096247061db683b05",
+        "Footprint": "e881148ad2474eca984003fd005c3c47",
+        "3D Model": "4b62cbe1b73d4759b5f95a4a62c5ff05",
+        "3D Model Title": "HDR-TH_4P-P2.54-V-F",
+        "3D Model Transform": "419.6842,98.464,0,0,0,0,0,0,-118.11",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "5aa052d938e2453eaa612742cdd7888f|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1657006176",
+      "custom_tags": "[\"Connectors\",\"Female Headers\"]"
+    },
+    "8229e1a1f8104e9ead96e0ea0b0bfcc4": {
+      "title": "Power-VCC",
+      "attributes": {
+        "Symbol": "19655f0f0a064c618bb765f555a1a61c",
+        "Global Net Name": "VCC",
+        "Footprint": "",
+        "Description": "netlabel-vcc"
+      },
+      "description": "netlabel-vcc",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "1af4157e802b42ed9e68371bbf429f12|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1634886",
+      "custom_tags": "[]"
+    },
+    "882884c084f647f4a2963387db18a0cd": {
+      "title": "LED_0603-G",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "LED?",
+        "Name": "",
+        "Symbol": "88a77407a8a04149864115f048924903",
+        "Footprint": "6872b80fc82e41ae9c364997e8d7c6f7",
+        "3D Model": "a9cdc1fbf7c645558838e51af9c6951f",
+        "3D Model Title": "LED0603-RD_GREEN",
+        "3D Model Transform": "63.7794,31.496,0,0,0,0,0,0,0",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "6cd7893b3de043ceb96bc4b7e8be66ec|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1701690758",
+      "custom_tags": "[\"光耦/LED/数码管/光电器件\",\"发光二极管/LED\"]"
+    },
+    "e29fcaac53ee408aa35d170ab4a84b2e": {
+      "title": "Res_0603",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "R?",
+        "Supplier Footprint": "0603",
+        "Symbol": "f5d82acc916e4d20b212367198770194",
+        "Footprint": "b0ed3730e3524043b32c9ab99bd5aa78",
+        "3D Model": "fc143cca1e79419f9cd78b61e9279f08",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Value": "10K",
+        "Name": "={Value}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "f61af53b8d604d888b6dd9daa1a301b0|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660792248",
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]"
+    },
+    "6bf9bc129a554f34bdea3934e018d92f": {
+      "title": "Ground-GND",
+      "attributes": {
+        "Symbol": "9cc0a03c670c445a95bd335d5be3c415",
+        "Footprint": "",
+        "Description": "netlabel-gnd"
+      },
+      "description": "netlabel-gnd",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "eebd21089444443ab2a2e9a384b3a8e2|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1634886",
+      "custom_tags": "[]"
+    },
+    "515b4ed504f74cbf86ac7136883a239f": {
+      "title": "Netport-IN",
+      "attributes": {
+        "Symbol": "39255ea80f5247f3a3d324200eb95603",
+        "Footprint": "",
+        "Description": "netport-in"
+      },
+      "description": "netport-in",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "f35c36484a25457782c9e38d43d45b50|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1634885",
+      "custom_tags": "[]"
+    },
+    "c192ca6d8bc64e52940b2df1af3b74af": {
+      "title": "TPSM84209",
+      "attributes": {
+        "Symbol": "643b3479df4d40ec9a2b9fd812c63c07",
+        "Name": "",
+        "Designator": "U?",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Footprint": "",
+        "3D Model": "",
+        "3D Model Title": "",
+        "3D Model Transform": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "335e782ae7e644f396ff6ee7de01ba13|userLib",
+      "version": "1775281180",
+      "custom_tags": "[]"
+    },
+    "a0c5c0dd10514dc0ae2305c5fa041164": {
+      "title": "TPSM84209RKHR",
+      "attributes": {
+        "LCSC Part Name": "4.5V至28V输入、1.2V至6V输出、2.5A电源模块",
+        "Supplier Part": "C2878926",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "TPSM84209RKHR",
+        "Supplier Footprint": "QFN-9-FOD(4x4.5)cm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://www.ti.com/cn/lit/gpn/tpsm84209",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "e93b4837ad434524bd5311bde5eb86dc",
+        "Designator": "U?",
+        "Footprint": "7871df3bfdcf4fd3bee02849729abce6",
+        "Name": "={Manufacturer Part}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20241205/83F8E8ACAF9DB175D6C72682BC1000CF.jpg"
+      ],
+      "source": "ec37fd4761e54ca7b1d9d447083caa65|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1723000802",
+      "custom_tags": "[\"Power Management (PMIC)\",\"DC-DC Converters\"]"
+    },
+    "ece19e44a6e04177ab95061a4a642ad8": {
+      "title": "KF301-5.0-2P",
+      "attributes": {
+        "LCSC Part Name": "1x2P 5mm 直插 排数:1 每排P数:2",
+        "Supplier Part": "C474881",
+        "Manufacturer": "KEFA(科发)",
+        "Manufacturer Part": "KF301-5.0-2P",
+        "Supplier Footprint": "插件,P=5mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/KF301-5.0-2P/481499.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "b2075fcc11eb4075811af0d590f43ebf",
+        "Designator": "U?",
+        "Footprint": "e11d4f4ab4e94affb64dd19b58d20ea2",
+        "3D Model": "92b9673a89d6429f93b6f75db486dcdb",
+        "3D Model Title": "CONN-TH_P5.00_KF301-5.0-2P",
+        "3D Model Transform": "417.322,299.21594,0,0,0,0,11.811,7.874,-137.795",
+        "Number of Positions or Pins": "1x2P",
+        "Pitch": "5mm",
+        "Color": "Blue",
+        "Mounting Type": "Through Hole",
+        "Number of Pins": "2P",
+        "Number of Rows": "1",
+        "Number of PINs Per Row": "2",
+        "Current Rating": "17A",
+        "Voltage Rating (Max)": "250V",
+        "Wire Gauge - AWG": "14~22",
+        "Wire Gauge - mm2": "1.5",
+        "Operating Temperature": "-30℃~+120℃",
+        "Name": "={Manufacturer Part}",
+        "Description": "Number of Positions or Pins:1x2P Pitch:5mm Color:Blue Mounting Type:Through Hole Number of Pins:2P Number of Rows:1 Number of PINs Per Row:2 Current Rating:17A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Wire Gauge - mm2:1.5 Oper"
+      },
+      "description": "Number of Positions or Pins:1x2P Pitch:5mm Color:Blue Mounting Type:Through Hole Number of Pins:2P Number of Rows:1 Number of PINs Per Row:2 Current Rating:17A Voltage Rating (Max):250V Wire Gauge - AWG:14~22 Wire Gauge - mm2:1.5 Wire Gauge - mm2:1.5 Oper",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230107/EFEF4E9D2759D0AF55BCF155362D44D5.jpg"
+      ],
+      "source": "e935a49a2f9943ac9b36062bb1b3a210|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660161130",
+      "custom_tags": "[\"Connectors\",\"Screw Terminal Blocks\"]"
+    },
+    "32660b6a40d74e3e91f86cb75d67bfb1": {
+      "title": "RT0603CRE071K37L",
+      "attributes": {
+        "LCSC Part Name": "薄膜电阻 1.37kΩ ±0.25% 100mW",
+        "Supplier Part": "C705911",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RT0603CRE071K37L",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200720/C705911_C0C0480A0E18114730977775B5293834.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "54757b74f55f44b8a1921b362401ee6e",
+        "Designator": "R?",
+        "Footprint": "73f91bc8d0f44757b23719f067862255",
+        "3D Model": "112863783b5b41f1b5254f87eedc7932",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Type": "Thin Film Resistor",
+        "Value": "1.37kΩ",
+        "Tolerance": "±0.25%",
+        "Power(Watts)": "",
+        "Overload Voltage (Max)": "",
+        "Temperature Coefficient": "±50ppm/℃",
+        "Operating Temperature Range": "-55℃~+155℃",
+        "Name": "={Value}",
+        "Description": "Type:Thin Film Resistor Resistance: Tolerance:±0.25% Tolerance:±0.25% Power(Watts): Overload Voltage (Max): Temperature Coefficient:±50ppm/℃ Temperature Coefficient:±50ppm/℃ Operating Temperature Range:-55℃~+155℃ Operating Temperature Range:-55℃~+155℃"
+      },
+      "description": "Type:Thin Film Resistor Resistance: Tolerance:±0.25% Tolerance:±0.25% Power(Watts): Overload Voltage (Max): Temperature Coefficient:±50ppm/℃ Temperature Coefficient:±50ppm/℃ Operating Temperature Range:-55℃~+155℃ Operating Temperature Range:-55℃~+155℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230104/4AFFAB7D053B46D350EFAD251CD5ACD2.jpg"
+      ],
+      "source": "26d2dce0e7ed4906955cea1101df7a65|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1664482707",
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]"
+    },
+    "0c7fb8aaa4044291a725a6ba3c8eb3c1": {
+      "title": "CA45A-B-10V-100UF-K",
+      "attributes": {
+        "LCSC Part Name": "100uF ±10% 10V",
+        "Supplier Part": "C2976906",
+        "Manufacturer": "CEC(振华新云)",
+        "Manufacturer Part": "CA45A-B-10V-100UF-K",
+        "Supplier Footprint": "CASE-B-3528-19(mm)",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/CA45A-B-10V-100UF-K/3385423.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "ac6364e0bcac48b992d056ed11c66c0d",
+        "Designator": "U?",
+        "Footprint": "7621476f10cb49c2801baf89c59221d6",
+        "3D Model": "df83443d22fe46a3b109041cc3b199dd",
+        "3D Model Title": "CASE-B_L3.5-W2.8-H1.9",
+        "3D Model Transform": "145.669,110.236,0,180,0,0,0,0,0",
+        "Value": "100uF",
+        "Tolerance": "±10%",
+        "Voltage Rating": "10V",
+        "Current - Leakage": "10uA",
+        "Operating Temperature": "-55℃~+125℃",
+        "Name": "={Value}",
+        "Description": "Capacitance:100uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Current - Leakage:10uA Operating Temperature:-55℃~+125℃ Operating Temperature:-55℃~+125℃"
+      },
+      "description": "Capacitance:100uF Tolerance:±10% Tolerance:±10% Voltage Rating:10V Current - Leakage:10uA Operating Temperature:-55℃~+125℃ Operating Temperature:-55℃~+125℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230106/29C0FDDEEB74076E8B9489F0ECC8DA8B.jpg"
+      ],
+      "source": "b064261ba0894635910ef93a2c4c5c6c|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1665171626",
+      "custom_tags": "[\"Capacitors\",\"Tantalum Capacitors\"]"
+    },
+    "5bf272587bab4942b3c7796af9a63270": {
+      "title": "GVZ1H107M0810CNVC",
+      "attributes": {
+        "LCSC Part Name": "100uF ±20% 50V",
+        "Supplier Part": "C2983550",
+        "Manufacturer": "HRK(鸿瑞凯电子)",
+        "Manufacturer Part": "GVZ1H107M0810CNVC",
+        "Supplier Footprint": "SMD,D8xL10.5mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://item.szlcsc.com/datasheet/GVZ1H107M0810CNVC/3420539.html",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "30ffc120eaf6419985655df7e1cf0f88",
+        "Designator": "C?",
+        "Footprint": "bdb23ad1953b46cb8265eb750b1bce64",
+        "3D Model": "54702dd93fd341bcb1a25d0cb74ede28",
+        "3D Model Title": "CAP-SMD_BD8.0-L8.3-W8.3-FD",
+        "3D Model Transform": "393.7,326.771,0,180,0,0,0,0,0",
+        "Value": "100uF",
+        "Tolerance": "±20%",
+        "Voltage Rating": "50V",
+        "Ripple Current": "350mA@100kHz",
+        "Equivalent Series Resistance(ESR)": "340mΩ@100kHz",
+        "Diameter": "8mm",
+        "Height - Seated (Max)": "10.5mm",
+        "Lifetime": "3000hrs@105℃",
+        "Operating Temperature": "-55℃~+105℃",
+        "Name": "={Value}",
+        "Description": "Capacitance:100uF Tolerance:±20% Tolerance:±20% Voltage Rating:50V Ripple Current:350mA@100kHz Equivalent Series Resistance(ESR):340mΩ@100kHz Diameter:8mm Height - Seated (Max):10.5mm Lifetime:3000hrs@105℃ Operating Temperature:-55℃~+105℃ Operating Temper"
+      },
+      "description": "Capacitance:100uF Tolerance:±20% Tolerance:±20% Voltage Rating:50V Ripple Current:350mA@100kHz Equivalent Series Resistance(ESR):340mΩ@100kHz Diameter:8mm Height - Seated (Max):10.5mm Lifetime:3000hrs@105℃ Operating Temperature:-55℃~+105℃ Operating Temper",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230106/8AEA84C0980E3C5DF279DFBE62281FF2.jpg"
+      ],
+      "source": "2bab4c0e082848a0bf84b3ef345961da|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1752133202",
+      "custom_tags": "[\"Capacitors\",\"Aluminum Electrolytic Capacitors - SMD\"]"
+    },
+    "276a3b7c11bf49db9ea13374e042f3c0": {
+      "title": "MPU6050",
+      "attributes": {
+        "Designator": "M?",
+        "Supplier Part": "",
+        "Supplier": "",
+        "Manufacturer Part": "",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Name": "MPU6050",
+        "Symbol": "ace99f6bbe60432fb0273682430e4d46",
+        "Footprint": "",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "9501cab6c3f0464791fb70d3e229720e|userLib",
+      "version": "1775741148",
+      "custom_tags": "[]"
+    }
+  },
+  "boards": {
+    "Mainboard": {
+      "schematic": "1246dd8862ce4e9d9898ab8d42315497",
+      "pcb": "8d01c4232aea443ea6e0750a1d190b8d"
+    }
+  },
+  "config": {
+    "title": "SmeeHive",
+    "cbbProject": 0,
+    "defaultSheet": "243030587fbe48629d903f7bfb8cd3d5",
+    "editorVersion": "2.2.45.4"
+  }
+}

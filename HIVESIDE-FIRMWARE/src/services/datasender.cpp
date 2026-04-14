@@ -11,7 +11,7 @@
 
 
 // --- Configurable Endpoints ---
-const char* AUDIO_SERVER = "zabravih.org";
+const char* AUDIO_SERVER = "smeehive.zabravih.org";
 const char* UPLOAD_PATH = "/api/measurements/";
 
 // --- Hardware Settings ---
